@@ -1,0 +1,112 @@
+.opening {
+  position: relative;
+  padding-top: var(--space-6);
+  border-bottom: var(--border);
+  overflow: hidden;
+}
+
+.openingBody {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-6);
+  padding: var(--space-9) 0 var(--space-8);
+  text-align: center;
+}
+
+.mono {
+  margin-bottom: var(--space-2);
+}
+
+.openingLead {
+  max-width: 28ch;
+  color: var(--color-text-strong);
+}
+
+/* волна: не выше 45% носителя, у нижнего края */
+.wave {
+  max-height: 260px;
+}
+
+.wave img {
+  object-fit: cover;
+  object-position: top;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+
+.colLabel {
+  grid-column: 1 / span 3;
+  padding-top: var(--space-3);
+}
+
+.colText {
+  grid-column: 4 / span 8;
+  display: grid;
+  gap: var(--space-6);
+}
+
+.tactileText {
+  max-width: 60ch;
+  opacity: 0.92;
+}
+
+.pack {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: center;
+}
+
+.packMedia {
+  grid-column: 2 / span 4;
+}
+
+.packText {
+  grid-column: 7 / span 5;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.closingInner {
+  display: grid;
+  gap: var(--space-6);
+  justify-items: start;
+}
+
+.closingCtas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5) var(--space-6);
+}
+
+@media (max-width: 1023px) {
+  .colLabel,
+  .colText,
+  .packMedia,
+  .packText {
+    grid-column: 1 / -1;
+  }
+
+  .colText {
+    margin-top: var(--space-4);
+  }
+
+  .packText {
+    margin-top: var(--space-6);
+  }
+
+  .openingBody {
+    padding: var(--space-8) 0 var(--space-7);
+  }
+}
+
+@media (max-width: 767px) {
+  .wave {
+    max-height: 120px;
+  }
+}

@@ -1,0 +1,253 @@
+/* ── Философия ─────────────────────────────────────── */
+.manifestoGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-6) var(--grid-gutter);
+  margin-bottom: var(--space-9);
+}
+
+.manifestoLabel {
+  grid-column: 1 / span 3;
+  padding-top: var(--space-4);
+}
+
+.manifestoTitle {
+  grid-column: 4 / span 9;
+}
+
+.manifestoText {
+  grid-column: 7 / span 5;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+  color: var(--color-text-strong);
+}
+
+@media (max-width: 1023px) {
+  .manifestoLabel,
+  .manifestoTitle,
+  .manifestoText {
+    grid-column: 1 / -1;
+  }
+
+  .manifestoGrid {
+    margin-bottom: var(--space-8);
+  }
+}
+
+/* ── Коллекция ─────────────────────────────────────── */
+.feature {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  border-block: var(--border);
+}
+
+.featureMedia {
+  position: relative;
+  min-height: 760px;
+  border-right: var(--border);
+}
+
+.featurePanel {
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.featureInner {
+  display: grid;
+  align-content: center;
+  gap: var(--space-5);
+  padding: var(--space-9) var(--grid-margin) var(--space-7) var(--space-8);
+}
+
+.featureTags {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.featureSpecs {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  border-block: var(--border-soft);
+}
+
+.featureSpecs > div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.featureSpecs dd {
+  font-size: var(--text-body-s);
+  color: var(--color-text-strong);
+}
+
+.featureCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5) var(--space-6);
+  align-items: center;
+  margin-top: var(--space-2);
+}
+
+.featureDetail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  align-items: end;
+  padding: 0 var(--grid-margin) var(--space-7) var(--space-8);
+}
+
+@media (max-width: 1023px) {
+  .feature {
+    grid-template-columns: 1fr;
+  }
+
+  .featureMedia {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    border-right: 0;
+    border-bottom: var(--border);
+  }
+
+  .featureInner,
+  .featureDetail {
+    padding-inline: var(--grid-margin);
+  }
+
+  .featureInner {
+    padding-top: var(--space-8);
+  }
+}
+
+@media (max-width: 767px) {
+  .featureSpecs > div {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+
+  .featureDetail {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Тактильность ──────────────────────────────────── */
+.tactile {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+
+@media (max-width: 1023px) {
+  .tactile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space-7);
+  }
+}
+
+/* ── Коллекции на Forest ───────────────────────────── */
+.collectionsHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+.collectionsList {
+  border-top: var(--line) solid rgb(255 247 230 / 0.35);
+}
+
+.collectionRow {
+  display: grid;
+  grid-template-columns: 64px 4fr 5fr 2fr;
+  align-items: baseline;
+  gap: var(--grid-gutter);
+  padding-block: var(--space-6);
+  border-bottom: var(--line) solid rgb(255 247 230 / 0.35);
+  transition: padding var(--duration) var(--ease), background-color var(--duration) var(--ease);
+}
+
+.collectionRow:hover {
+  padding-left: var(--space-4);
+  background: rgb(255 247 230 / 0.04);
+}
+
+.collectionIndex {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+}
+
+.collectionName {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
+}
+
+.collectionLead {
+  font-size: var(--text-body);
+  opacity: 0.88;
+}
+
+.collectionSeason {
+  justify-self: end;
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+@media (max-width: 1023px) {
+  .collectionRow {
+    grid-template-columns: 48px 1fr;
+    row-gap: var(--space-2);
+  }
+
+  .collectionLead,
+  .collectionSeason {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 767px) {
+  .collectionsHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ── Журнал ────────────────────────────────────────── */
+.journal {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+}
+
+@media (max-width: 1023px) {
+  .journal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space-7);
+  }
+
+  .journal > li:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .journal {
+    grid-template-columns: 1fr;
+  }
+
+  .journal > li:nth-child(3) {
+    display: block;
+  }
+}

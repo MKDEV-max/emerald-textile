@@ -1,0 +1,118 @@
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--header-height);
+  padding: 0 var(--space-5);
+  border-bottom: var(--border);
+  background: var(--color-white);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  color: var(--color-emerald);
+}
+
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-5);
+}
+
+.item {
+  border-bottom: var(--border-soft);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 64px;
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  text-align: left;
+}
+
+.link[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+.sub {
+  display: grid;
+  gap: var(--space-5);
+  padding: 0 0 var(--space-5);
+  animation: fade-in var(--duration) var(--ease) both;
+}
+
+.subAll {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.subGroup {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.subTitle {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+.subList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.subList a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: var(--line) solid var(--color-border-soft);
+  font-size: var(--text-body-s);
+  color: var(--color-text-strong);
+  background: var(--color-white);
+}
+
+.service {
+  display: grid;
+  padding: var(--space-4) var(--space-5);
+  border-top: var(--border);
+}
+
+.serviceLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.contacts {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5) var(--space-6);
+  font-size: var(--text-body-s);
+  color: var(--color-text-strong);
+}

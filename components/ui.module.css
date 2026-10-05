@@ -1,0 +1,345 @@
+/* ── Tag / Badge — 10 px caps, padding 6/10 ───────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 6px 10px;
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  border: var(--line) solid var(--color-emerald);
+  color: var(--color-emerald);
+  background: var(--color-white);
+}
+
+.tagSolid {
+  background: var(--color-forest);
+  border-color: var(--color-forest);
+  color: var(--color-cream);
+}
+
+.tagCream {
+  background: var(--color-cream);
+  border-color: var(--color-cream);
+  color: var(--color-walnut);
+}
+
+.tagMuted {
+  background: transparent;
+  border-color: var(--color-neutral);
+  color: var(--color-text-muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* ── Wave — фирменная гравюрная волна ──────────────────── */
+.wave {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.wave img {
+  width: 100%;
+  height: auto;
+  min-width: 960px;
+  max-width: none;
+}
+
+.waveBottom {
+  position: absolute;
+  inset: auto 0 0 0;
+}
+
+/* ── Breadcrumbs ───────────────────────────────────────── */
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-text-muted);
+}
+
+.crumbs a {
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.crumbs a:hover {
+  color: var(--color-emerald);
+}
+
+.crumbs [aria-current="page"] {
+  color: var(--color-emerald);
+}
+
+.crumbSep {
+  color: var(--color-border-soft);
+}
+
+/* ── Section header ────────────────────────────────────── */
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+.sectionHeadText {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 720px;
+}
+
+.sectionHeadLead {
+  color: var(--color-text-strong);
+  max-width: 560px;
+}
+
+@media (max-width: 767px) {
+  .sectionHead {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: var(--space-6);
+  }
+}
+
+/* ── Eyebrow / номер раздела ───────────────────────────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* ── Свотчи — квадратные, R0 ───────────────────────────── */
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.swatch {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+  border: var(--line) solid transparent;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease);
+}
+
+.swatch::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgb(2 90 58 / 0.18);
+}
+
+.swatch:hover {
+  border-color: var(--color-border-soft);
+}
+
+.swatch[aria-checked="true"],
+.swatch[aria-pressed="true"] {
+  border-color: var(--color-emerald);
+}
+
+.swatchS {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  cursor: default;
+}
+
+.swatchS::before {
+  box-shadow: inset 0 0 0 1px rgb(2 90 58 / 0.25);
+}
+
+/* ── Quantity selector ─────────────────────────────────── */
+.qty {
+  display: inline-grid;
+  grid-template-columns: 44px 44px 44px;
+  height: 44px;
+  border: var(--line) solid var(--color-border-soft);
+}
+
+.qtyS {
+  grid-template-columns: 36px 32px 36px;
+  height: 36px;
+}
+
+.qty button {
+  display: grid;
+  place-items: center;
+  color: var(--color-emerald);
+  transition: background-color var(--duration-fast) var(--ease);
+}
+
+.qty button:hover:not(:disabled) {
+  background: var(--color-ivory);
+}
+
+.qty button:disabled {
+  color: var(--color-neutral);
+  cursor: not-allowed;
+}
+
+.qty output {
+  display: grid;
+  place-items: center;
+  font-size: var(--text-body-s);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border-inline: var(--line) solid var(--color-border-faint);
+}
+
+/* ── Empty state ───────────────────────────────────────── */
+.empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  padding: var(--space-9) var(--space-5);
+  text-align: center;
+  border: var(--border-soft);
+  background: var(--color-ivory);
+}
+
+.emptyIcon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border: var(--border);
+  color: var(--color-emerald);
+}
+
+.emptyText {
+  max-width: 420px;
+  color: var(--color-text-strong);
+}
+
+.emptyCompact {
+  padding: var(--space-7) var(--space-5);
+  border: 0;
+  background: transparent;
+}
+
+/* ── Loading ───────────────────────────────────────────── */
+.loading {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  padding: var(--space-10) var(--space-5);
+  color: var(--color-emerald);
+}
+
+.loadingBar {
+  position: relative;
+  width: 160px;
+  height: 1px;
+  background: var(--color-border-faint);
+  overflow: hidden;
+}
+
+.loadingBar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: var(--color-emerald);
+  animation: loading 1.2s var(--ease) infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-ivory) 0%, #f1f1e8 50%, var(--color-ivory) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Checkbox / Radio (квадратные) ─────────────────────── */
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 32px;
+  cursor: pointer;
+  font-size: var(--text-body-s);
+  color: var(--color-text-strong);
+  user-select: none;
+}
+
+.check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.checkBox {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: var(--line) solid var(--color-emerald);
+  background: var(--color-white);
+  color: transparent;
+  transition: background-color var(--duration-fast) var(--ease);
+}
+
+.check input:checked + .checkBox {
+  background: var(--color-emerald);
+  color: var(--color-cream);
+}
+
+.check input:focus-visible + .checkBox {
+  outline: var(--line-active) solid var(--color-emerald);
+  outline-offset: 2px;
+}
+
+.check input:disabled ~ * {
+  opacity: 0.45;
+}
+
+.checkCount {
+  margin-left: auto;
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}

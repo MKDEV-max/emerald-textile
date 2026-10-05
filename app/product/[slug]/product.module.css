@@ -1,0 +1,18 @@
+.top {
+  padding-top: var(--space-6);
+  padding-bottom: var(--section);
+}
+
+.view {
+  margin-top: var(--space-6);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.similar {
+  border-top: var(--border);
+}

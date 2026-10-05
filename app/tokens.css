@@ -1,0 +1,174 @@
+/*
+ * Emerald Textile — дизайн-токены
+ * Источник: Brand Guidelines v1.0 (2026), разделы 04–08.
+ * Значения не изобретаются: всё, что помечено в брендбуке, перенесено 1:1.
+ */
+:root {
+  /* ── 04 · Color System ─────────────────────────────── */
+  /* Primary — Emerald family */
+  --color-emerald: #025a3a;        /* логотип, текст, линии, CTA */
+  --color-deep-emerald: #034831;   /* обводка фото, нажатые состояния, плотный текст */
+  --color-forest: #024429;         /* сплошные зелёные фоны: бирки, футер */
+  --color-night-forest: #13281c;   /* тёмные инфо-панели поверх фото (92%) */
+  /* Secondary — warm naturals */
+  --color-cream: #fff7e6;          /* текст и иконки на тёмно-зелёном */
+  --color-ivory: #f8f8f1;          /* подложка логотипа, бумага, фоны страниц */
+  --color-taupe: #6e5c43;          /* тёплые инфо-плашки поверх фото */
+  --color-walnut: #544339;         /* глубокий тёплый акцент, плашка ухода */
+  /* Neutral */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-neutral: #d9d9d9;        /* разделители, плейсхолдеры, disabled */
+
+  /* Роли */
+  --color-bg: var(--color-white);
+  --color-bg-alt: var(--color-ivory);
+  --color-bg-dark: var(--color-forest);
+  --color-text: var(--color-emerald);
+  --color-text-strong: var(--color-deep-emerald);
+  --color-text-muted: #2f6e56;     /* Emerald, приглушённый для служебного текста (контраст ≥ 5:1) */
+  --color-text-inverse: var(--color-cream);
+  --color-accent: var(--color-emerald);
+  --color-border: var(--color-emerald);
+  --color-border-soft: rgb(2 90 58 / 0.35); /* Emerald 35% — служебные линии */
+  --color-border-faint: rgb(2 90 58 / 0.14);
+  --color-overlay: rgb(19 40 28 / 0.92);    /* Night Forest 92% */
+  --color-scrim: rgb(19 40 28 / 0.4);
+  --color-error: #8a2e1f;          /* тёплый кирпичный — только для ошибок форм */
+
+  /* ── 05 · Typography ───────────────────────────────── */
+  /*
+   * Display: брендбук задаёт JOURNALISM, но все его доски (шкала, сайт, каталог)
+   * свёрстаны на указанном там же фолбэке Oranienbaum в смешанном регистре.
+   * Локально установленный JOURNALISM — капительный, поэтому он намеренно
+   * не стоит первым в стеке: иначе сайт выглядел бы по-разному у разных
+   * посетителей. Чтобы включить лицензионный веб-шрифт, подключите его
+   * через @font-face и добавьте имя в начало этого стека.
+   */
+  --font-display: var(--font-oranienbaum), "Oranienbaum", "Times New Roman", serif;
+  --font-text: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont,
+    var(--font-inter), "Helvetica Neue", Arial, system-ui, sans-serif;
+
+  --tracking-display: -0.05em;  /* JOURNALISM: трекинг −5% */
+  --tracking-label: 0.14em;     /* Label / Caps: +14% */
+  --tracking-button: 0.08em;    /* Button / Label: +8% */
+  --tracking-caption: 0.02em;   /* Caption: +2% */
+
+  /* Шкала (desktop-значения брендбука, адаптивно через clamp) */
+  --text-display-xl: clamp(72px, 12.5vw, 180px);  /* 180 / 100% */
+  --text-display-l: clamp(52px, 8.4vw, 120px);    /* 120 / 100% */
+  --text-hero: clamp(46px, 6.1vw, 88px);          /* hero сайта: JOURNALISM 104 в брендбуке для короткого заголовка; 88 — для заголовка в 3 строки */
+  --text-h1: clamp(40px, 5vw, 72px);              /* 72 / 105% */
+  --text-h2: clamp(32px, 3.34vw, 48px);           /* 48 / 110% */
+  --text-h3: clamp(24px, 2.23vw, 32px);           /* 32 / 115% */
+  --text-h4: 24px;                                /* название товара в карточке */
+  --text-body-l: clamp(18px, 1.39vw, 20px);       /* 20 / 150% */
+  --text-body: 16px;                              /* 16 / 150% */
+  --text-body-s: 13px;                            /* 13 / 150% */
+  --text-label: 12px;                             /* 12 / +14% / CAPS */
+  --text-button: 14px;                            /* 14 / +8% / CAPS */
+  --text-tag: 10px;                               /* теги и бейджи: 10 px caps */
+  --text-caption: 11px;                           /* 11 / 140% / +2% */
+
+  --leading-display: 1;
+  --leading-h1: 1.05;
+  --leading-h2: 1.1;
+  --leading-h3: 1.15;
+  --leading-body: 1.5;
+  --leading-caption: 1.4;
+
+  /* ── 07 · Spacing & Shape ──────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 120px;
+
+  --section: var(--space-10);       /* 120 desktop */
+
+  --radius-0: 0;                    /* основное правило: этикетки, карточки, кнопки, фото */
+  --radius-panel: 3%;               /* R3% — только плашка поверх фото */
+  --radius-qr: 2%;
+
+  --line-print: 0.5pt;
+  --line: 1px;                      /* рамки и разделители на сайте */
+  --line-active: 2px;               /* активная вкладка, фокус */
+  --line-panel: 3px;                /* обводка плашек поверх фото (Cream) */
+
+  --border: var(--line) solid var(--color-border);
+  --border-soft: var(--line) solid var(--color-border-soft);
+  --border-faint: var(--line) solid var(--color-border-faint);
+
+  /* Тени — по брендбуку теней нет; единственная мягкая тень для выпадающих панелей */
+  --shadow-none: none;
+  --shadow-panel: 0 24px 48px -24px rgb(19 40 28 / 0.18);
+
+  /* Компоненты */
+  --button-height: 52px;
+  --button-height-s: 40px;
+  --button-pad-x: 32px;
+  --header-height: 88px;
+  --header-height-mobile: 64px;
+
+  /* ── 06 · Grid & Layout ────────────────────────────── */
+  --grid-columns: 12;
+  --grid-margin: 80px;
+  --grid-gutter: 24px;
+  --content-max: 1280px;
+  --page-max: 1440px;
+
+  /* Breakpoints (для справки; в media queries используются значения напрямую) */
+  --bp-mobile: 390px;
+  --bp-tablet: 768px;
+  --bp-laptop: 1024px;
+  --bp-desktop: 1280px;
+  --bp-wide: 1440px;
+
+  /* ── Motion ────────────────────────────────────────── */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration: 260ms;
+  --duration-slow: 300ms;
+  --duration-reveal: 700ms;
+
+  --z-header: 50;
+  --z-drawer: 80;
+  --z-overlay: 90;
+  --z-toast: 100;
+}
+
+@media (max-width: 1279px) {
+  :root {
+    --grid-margin: 48px;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --grid-columns: 8;
+    --grid-margin: 40px;
+    --section: var(--space-9);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --grid-columns: 4;
+    --grid-margin: 20px;
+    --grid-gutter: 16px;
+    --section: var(--space-8);      /* 64 mobile */
+    --header-height: var(--header-height-mobile);
+  }
+}
+
+@media (max-width: 359px) {
+  :root {
+    --grid-margin: 16px;
+  }
+}

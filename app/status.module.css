@@ -1,0 +1,26 @@
+.status {
+  position: relative;
+  border-bottom: var(--border);
+  overflow: hidden;
+}
+
+.inner {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  padding-block: var(--space-10) var(--space-8);
+  text-align: center;
+}
+
+.inner > p:last-of-type {
+  max-width: 52ch;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-5) var(--space-6);
+  margin-top: var(--space-3);
+}

@@ -1,0 +1,113 @@
+.cats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  margin-top: var(--space-8);
+}
+
+.catalog {
+  padding-bottom: var(--section);
+}
+
+/* Категория: подкатегории */
+.subnav {
+  border-block: var(--border);
+}
+
+.subnavList {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.subnavList::-webkit-scrollbar {
+  display: none;
+}
+
+.subnavLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 60px;
+  padding: 0 var(--space-5);
+  border-left: var(--border-soft);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color var(--duration-fast) var(--ease);
+}
+
+.subnavList > li:first-child .subnavLink {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.subnavLink:hover {
+  background: var(--color-ivory);
+}
+
+.subnavCount {
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 0;
+}
+
+.catalogTop {
+  padding-top: var(--space-8);
+}
+
+.seo {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  padding-block: var(--section);
+  border-top: var(--border);
+}
+
+.seoTitle {
+  grid-column: 1 / span 4;
+}
+
+.seoText {
+  grid-column: 6 / span 7;
+  columns: 2;
+  column-gap: var(--grid-gutter);
+  font-size: var(--text-body-s);
+  color: var(--color-text-strong);
+}
+
+.seoText p {
+  break-inside: avoid;
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 1023px) {
+  .cats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--space-6);
+  }
+
+  .seoTitle,
+  .seoText {
+    grid-column: 1 / -1;
+  }
+
+  .seoText {
+    columns: 1;
+    margin-top: var(--space-4);
+  }
+}
+
+@media (max-width: 767px) {
+  .cats {
+    margin-top: var(--space-6);
+    gap: var(--space-5) var(--grid-gutter);
+  }
+
+  .subnavLink {
+    min-height: 52px;
+    padding: 0 var(--space-4);
+  }
+}

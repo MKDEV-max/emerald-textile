@@ -1,0 +1,165 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: var(--button-height);
+  padding: 0 var(--button-pad-x);
+  border: var(--line) solid transparent;
+  border-radius: var(--radius-0);
+  font-family: var(--font-text);
+  font-size: var(--text-button);
+  font-weight: 600;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.s {
+  min-height: var(--button-height-s);
+  padding: 0 var(--space-5);
+  font-size: var(--text-label);
+}
+
+.block {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.label {
+  display: inline-block;
+}
+
+.arrow {
+  flex: none;
+  transition: transform var(--duration) var(--ease);
+}
+
+.button:hover .arrow {
+  transform: translateX(4px);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Primary — Emerald (CTA) */
+.primary {
+  background: var(--color-emerald);
+  border-color: var(--color-emerald);
+  color: var(--color-cream);
+}
+
+.primary:hover {
+  background: var(--color-deep-emerald);
+  border-color: var(--color-deep-emerald);
+}
+
+.primary:active {
+  background: var(--color-forest);
+}
+
+.primary:disabled {
+  background: var(--color-neutral);
+  border-color: var(--color-neutral);
+  color: var(--color-white);
+}
+
+/* Secondary — контур 1 px */
+.secondary {
+  background: transparent;
+  border-color: var(--color-emerald);
+  color: var(--color-emerald);
+}
+
+.secondary:hover {
+  background: var(--color-emerald);
+  color: var(--color-cream);
+}
+
+.secondary:active {
+  background: var(--color-deep-emerald);
+}
+
+.secondary:disabled {
+  border-color: var(--color-neutral);
+  color: var(--color-neutral);
+  background: transparent;
+}
+
+/* Link — подчёркнутая caps-ссылка */
+.link {
+  min-height: 0;
+  padding: var(--space-2) 0;
+  border: 0;
+  border-bottom: var(--line) solid currentColor;
+  color: var(--color-emerald);
+  background: transparent;
+}
+
+.link.s {
+  padding: var(--space-1) 0;
+}
+
+.link:hover {
+  color: var(--color-deep-emerald);
+}
+
+/* Inverse — Cream на Forest */
+.inverse {
+  background: var(--color-cream);
+  border-color: var(--color-cream);
+  color: var(--color-emerald);
+}
+
+.inverse:hover {
+  background: var(--color-ivory);
+  border-color: var(--color-ivory);
+}
+
+/* Контур на тёмном */
+.outline-light {
+  background: transparent;
+  border-color: var(--color-cream);
+  color: var(--color-cream);
+}
+
+.outline-light:hover {
+  background: var(--color-cream);
+  color: var(--color-emerald);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .button:not(.link):not(.s) {
+    padding: 0 var(--space-5);
+  }
+}

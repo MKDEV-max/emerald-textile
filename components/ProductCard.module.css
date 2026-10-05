@@ -1,0 +1,230 @@
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.mediaWrap {
+  position: relative;
+}
+
+.mediaLink {
+  display: block;
+}
+
+/* Избранное */
+.wish {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--color-emerald);
+  background: rgb(255 255 255 / 0.86);
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+}
+
+.wish:hover {
+  background: var(--color-white);
+}
+
+.wished svg {
+  fill: var(--color-emerald);
+}
+
+/* Быстрое добавление */
+.quick {
+  position: absolute;
+  inset: auto 1px 1px 1px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  background: var(--color-emerald);
+  color: var(--color-cream);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-button);
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--duration) var(--ease),
+    transform var(--duration) var(--ease),
+    background-color var(--duration-fast) var(--ease);
+}
+
+.quick:hover {
+  background: var(--color-deep-emerald);
+}
+
+.quick:disabled {
+  background: var(--color-ivory);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.mediaWrap:hover .quick,
+.mediaWrap:focus-within .quick {
+  opacity: 1;
+  transform: none;
+}
+
+/* Тело карточки */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  min-height: 24px;
+}
+
+.title {
+  margin-top: var(--space-1);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h4);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.titleLink {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--duration) var(--ease);
+}
+
+.titleLink:hover {
+  background-size: 100% 1px;
+}
+
+.meta {
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caption);
+  color: var(--color-text-muted);
+}
+
+.colors {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.colorCount {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: var(--border);
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-button);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.from {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.old {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: gap var(--duration) var(--ease);
+}
+
+.more:hover {
+  gap: var(--space-2);
+}
+
+/* Мобильная логика: быстрое добавление — компактная иконка всегда на виду */
+@media (hover: none), (max-width: 767px) {
+  .quick {
+    inset: auto var(--space-2) var(--space-2) auto;
+    width: 40px;
+    min-height: 40px;
+    padding: 0;
+    justify-content: center;
+    opacity: 1;
+    transform: none;
+  }
+
+  .quickText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .quick:disabled {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    gap: var(--space-3);
+  }
+
+  .title {
+    font-size: 19px;
+  }
+
+  .more {
+    display: none;
+  }
+
+  .tags {
+    min-height: 0;
+  }
+
+  .tags > :nth-child(n + 2) {
+    display: none;
+  }
+}
