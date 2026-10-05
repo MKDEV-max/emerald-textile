@@ -3,6 +3,8 @@
 Next.js 16 (App Router) · React 19 · TypeScript · CSS Modules + дизайн-токены.
 Визуальная система перенесена из брендбука Emerald Textile v1.0 (2026).
 
+**Сайт:** https://mkdev-max.github.io/emerald-textile/
+
 ## Запуск
 
 ```bash
@@ -11,6 +13,16 @@ npm run dev      # разработка: http://localhost:3000
 npm run build    # production-сборка (70 статических страниц)
 npm run start    # production-сервер
 ```
+
+## Публикация на GitHub Pages
+
+```bash
+npm run build:pages   # статический экспорт в out/ с basePath /emerald-textile
+```
+
+Содержимое `out/` публикуется в ветку `gh-pages` — GitHub Pages раздаёт её как сайт.
+Скрипт `scripts/flatten-export.mjs` после сборки создаёт «плоские» копии RSC-файлов,
+которые Next 16 запрашивает при клиентских переходах, и файл `.nojekyll`.
 
 ## Структура
 
