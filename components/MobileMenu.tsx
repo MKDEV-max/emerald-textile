@@ -93,10 +93,6 @@ export function MobileMenu() {
         </Link>
       </div>
 
-      <div className={s.contacts}>
-        <a href="tel:+70000000000">+7 (000) 000-00-00</a>
-        <a href="mailto:info@emeraldtextile.ru">info@emeraldtextile.ru</a>
-      </div>
     </Modal>
   );
 }

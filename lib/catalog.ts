@@ -8,11 +8,25 @@ import { PHOTOS, textileImage } from "./data/images";
 
 /* ── Товар: изображения и цены ───────────────────────── */
 
-/** Галерея для выбранного цвета: фото (если есть) → макро → крупный план → упаковка */
+/**
+ * Галерея для выбранного цвета: фото (если есть) → образец ткани с ярлыком →
+ * крупный план плетения → фактура → упаковка.
+ */
 export function productGallery(p: Product, color?: ColorKey): ImageAsset[] {
   const c = color ?? p.colors[0];
   const photos = c === p.colors[0] ? (p.photos ?? []) : [];
-  return [...photos, textileImage(p.weave, c, "detail"), textileImage(p.weave, c, "close"), PHOTOS.packaging];
+  return [
+    ...photos,
+    textileImage(p.weave, c, "swatch"),
+    textileImage(p.weave, c, "close"),
+    textileImage(p.weave, c, "detail"),
+    PHOTOS.packaging,
+  ];
+}
+
+/** Миниатюра (корзина, поиск): образец ткани в выбранном цвете */
+export function productThumb(p: Product, color?: ColorKey): ImageAsset {
+  return textileImage(p.weave, color ?? p.colors[0], "swatch");
 }
 
 /** Главное изображение для карточки + второе для смены при наведении */

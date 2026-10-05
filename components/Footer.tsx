@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DEMO_NOTE, SITE } from "@/lib/site";
 import { Logo } from "./Logo";
 import { Newsletter } from "./Newsletter";
 import { Wave } from "./ui";
@@ -27,7 +28,7 @@ const COLUMNS = [
   {
     title: "Покупателям",
     links: [
-      { href: "/contacts", label: "Контакты" },
+      { href: "/contacts", label: "Связаться с нами" },
       { href: "/account", label: "Личный кабинет" },
       { href: "/wishlist", label: "Избранное" },
     ],
@@ -36,6 +37,7 @@ const COLUMNS = [
 
 /** Футер: Forest, реверсивный логотип, тональная волна («11 · Website»). */
 export function Footer() {
+  const { email, phone } = SITE.contacts;
   return (
     <footer className={`${s.footer} on-dark`}>
       <div className={`container ${s.inner}`}>
@@ -72,34 +74,26 @@ export function Footer() {
             </nav>
           ))}
           <div className={s.col}>
-            <h2 className={s.colTitle}>Контакты</h2>
+            <h2 className={s.colTitle}>Сервис</h2>
             <ul className={s.list}>
-              <li>
-                <a href="mailto:info@emeraldtextile.ru" className="link-underline">
-                  info@emeraldtextile.ru
-                </a>
-              </li>
-              <li>
-                <a href="tel:+70000000000" className="link-underline">
-                  +7 (000) 000-00-00
-                </a>
-              </li>
-              <li>Москва</li>
-              <li className={s.hours}>Ежедневно с 9:00 до 21:00</li>
+              <li>Доставка по России</li>
+              <li>Возврат в течение 14 дней</li>
+              <li>Многоразовая упаковка</li>
+              {email && (
+                <li>
+                  <a href={`mailto:${email}`} className="link-underline">
+                    {email}
+                  </a>
+                </li>
+              )}
+              {phone && <li>{phone}</li>}
             </ul>
           </div>
         </div>
 
         <div className={s.bottom}>
           <span>© 2026 Emerald Textile</span>
-          <span className={s.legal}>
-            <Link href="/delivery#vozvrat" className="link-underline">
-              Условия возврата
-            </Link>
-            <Link href="/contacts" className="link-underline">
-              Реквизиты
-            </Link>
-          </span>
+          {SITE.demo && <span className={s.demo}>{DEMO_NOTE}</span>}
         </div>
       </div>
       <Wave tone="tonal" className={s.wave} />

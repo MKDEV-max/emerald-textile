@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Oranienbaum } from "next/font/google";
+import { Inter, Noto_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/lib/store";
 import { Header } from "@/components/Header";
@@ -11,16 +11,15 @@ import { Toaster } from "@/components/Toaster";
 
 /*
  * Шрифты бренда — JOURNALISM (заголовки) и SF Pro Display (текст).
- * Их нет в открытом доступе, поэтому подключены фолбэки, которые указывает
- * сам брендбук: Oranienbaum — «ближайший доступный аналог JOURNALISM»,
- * Inter — «метрически близок к SF Pro». На устройствах Apple текст
- * отображается системным SF Pro. При появлении лицензионных файлов их
- * достаточно подключить через @font-face — токены уже ссылаются на них.
+ * JOURNALISM — узкая контрастная капитель; у имеющегося файла нет лицензии
+ * на веб-распространение, поэтому подключена Noto Serif Display (OFL)
+ * в сжатом начертании и верхнем регистре — ближайшая открытая замена.
+ * Текст — Inter («метрически близок к SF Pro» по брендбуку); на Apple — SF Pro.
  */
-const oranienbaum = Oranienbaum({
-  weight: "400",
+const display = Noto_Serif_Display({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-oranienbaum",
+  axes: ["wdth"],
+  variable: "--font-display-face",
   display: "swap",
 });
 
@@ -55,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#024429",
+  themeColor: "#F8F8F1",
   width: "device-width",
   initialScale: 1,
 };
@@ -66,13 +65,12 @@ const orgJsonLd = {
   name: "Emerald Textile",
   url: "https://emeraldtextile.ru",
   logo: "https://emeraldtextile.ru/brand/lockup-emerald.png",
-  email: "info@emeraldtextile.ru",
   address: { "@type": "PostalAddress", addressLocality: "Москва", addressCountry: "RU" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${oranienbaum.variable} ${inter.variable}`}>
+    <html lang="ru" className={`${display.variable} ${inter.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           Перейти к содержимому

@@ -291,62 +291,6 @@ def render_macro(weave, color_key, seed, drape_k=1.0, size=(W, H), zoom_k=1.0, l
     return finish(rgb, seed=seed)
 
 
-# ------------------------------------------------------------ packshot
-def render_stack(weave, color_key, seed, layers=3, size=(W, H), roll=False):
-    """Пакшот: стопка сложенного текстиля на светло-сером фоне."""
-    w, h = size
-    y, x = grid(h, w)
-    bgc = np.array([236, 233, 228], np.float32) / 255
-    floor_y = h * 0.74
-    bg = np.where((y < floor_y)[..., None], bgc * (1.0 - 0.05 * (y / h))[..., None] * 1.0,
-                  bgc * 0.955 * (1 - 0.04 * ((y - floor_y) / h))[..., None])
-    bg = bg * (1.02 - 0.06 * (x / w))[..., None]
-    img = bg.astype(np.float32)
-    fn, depth, spec = WEAVES[weave]
-    tex_full = fn(h, w, seed)
-    tex_full = (tex_full - tex_full.mean()) / (tex_full.std() + 1e-6)
-    sw = int(w * 0.66)
-    x0 = (w - sw) // 2
-    lh = int(h * (0.105 if not roll else 0.16))
-    # тень под стопкой
-    sh = np.exp(-(((x - w / 2) / (sw * 0.56)) ** 8)) * np.exp(-((y - floor_y - 6) ** 2) / 260)
-    sh = blur(sh.astype(np.float32), 10)
-    img *= (1 - 0.32 * sh / (sh.max() + 1e-6))[..., None]
-    base = np.array(COLORS[color_key], np.float32) / 255
-    top = floor_y
-    for i in range(layers):
-        y1 = int(top)
-        y0 = y1 - lh
-        inset = i * int(w * 0.006)
-        xa, xb = x0 + inset, x0 + sw - inset
-        yy = np.arange(y0, y1)
-        t = (yy - y0) / lh  # 0..1 по высоте сгиба
-        prof = np.sin(t * np.pi) ** 0.55  # выпуклость сгиба
-        light = 0.55 + 0.55 * np.clip(np.cos((t - 0.32) * np.pi * 0.95), 0, 1)
-        seg = tex_full[y0:y1, xa:xb] * (0.10 * depth / 3)
-        shade_band = (light * (0.88 + 0.12 * prof))[:, None] + seg
-        # скруглённые торцы
-        xx = np.arange(xa, xb)
-        endfall = np.clip(np.minimum(xx - xa, xb - xx) / (w * 0.02), 0, 1) ** 0.5
-        shade_band *= (0.82 + 0.18 * endfall)[None, :]
-        col = base[None, None, :] * shade_band[..., None] * np.array([1.02, 1.0, 0.965])
-        # тонкая линия-тень между слоями
-        col[-3:, :, :] *= 0.78
-        img[y0:y1, xa:xb] = np.clip(col, 0, 1)
-        top = y0
-    # верхняя плоскость (перспектива)
-    th = int(h * 0.06)
-    for k in range(th):
-        yy = int(top) - th + k
-        frac = k / th
-        inset = int((1 - frac) * w * 0.035) + layers * int(w * 0.006)
-        xa, xb = x0 + inset, x0 + sw - inset
-        rowtex = tex_full[yy, xa:xb] * 0.06
-        col = base * (1.08 - 0.06 * frac) + rowtex[:, None]
-        img[yy, xa:xb] = np.clip(col * np.array([1.02, 1.0, 0.965]), 0, 1)
-    return finish(img, dof=False, grain=0.008, seed=seed)
-
-
 # ------------------------------------------------------------ batch
 def save(img, folder, name):
     p = os.path.join(folder, name)
@@ -360,6 +304,84 @@ MATERIAL_TEXTURES = [
     ("linen", "beige"), ("waffle", "sage"), ("terry", "emerald"), ("herringbone", "emerald"),
 ]
 
+# ------------------------------------------------------------ swatch (v2)
+BRAND = os.path.join(os.path.dirname(__file__), "..", "public", "brand")
+
+
+def _soft_shadow(mask, radius, opacity):
+    sh = Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(radius))
+    return np.asarray(sh).astype(np.float32) / 255 * opacity
+
+
+def render_swatch(weave, color_key, seed, size=(W, H), label=True):
+    """Образец ткани на светлой бумаге: подшитая кромка, контактная тень и
+    вшитый тканый ярлык Forest со словесным знаком («13 · Labels»)."""
+    w, h = size
+    r = np.random.default_rng(seed)
+    y, x = grid(h, w)
+    # бумага: тёплый светло-серый, мягкий свет из окна слева сверху
+    paper = np.array([238, 235, 228], np.float32) / 255
+    bg = paper[None, None, :] * (1.03 - 0.10 * (x / w) * 0.6 - 0.10 * (y / h) * 0.8)[..., None]
+    bg += r.normal(0, 0.006, bg.shape)
+    # прямоугольник образца
+    x0, x1 = int(w * 0.10), int(w * 0.90)
+    y0, y1 = int(h * 0.09), int(h * 0.88)
+    mask = np.zeros((h, w), np.float32)
+    mask[y0:y1, x0:x1] = 1
+    # тень: контактная + мягкая
+    sh = np.roll(_soft_shadow(mask, 26, 0.30), (18, 10), axis=(0, 1)) + np.roll(_soft_shadow(mask, 5, 0.22), (3, 2), axis=(0, 1))
+    canvas = bg * (1 - np.clip(sh, 0, 0.5))[..., None]
+    # ткань
+    zk = {"satin": 0.45, "herringbone": 0.75, "crinkle": 0.8}.get(weave, 1.0)
+    fabric = np.asarray(render_macro(weave, color_key, seed, drape_k=0.5, size=(x1 - x0, y1 - y0), zoom_k=zk)).astype(np.float32) / 255
+    fh, fw = fabric.shape[:2]
+    fy, fx = grid(fh, fw)
+    # подгиб: строчка в 18 px от края и лёгкий валик по краю
+    hem = 22
+    edge = np.minimum(np.minimum(fx, fw - 1 - fx), np.minimum(fy, fh - 1 - fy))
+    roll = 0.9 + 0.1 * np.clip(edge / hem, 0, 1)
+    fabric *= roll[..., None]
+    stitch = (np.abs(edge - hem) < 1.2) & (((fx + fy) // 7) % 2 == 0)
+    fabric[stitch] *= 0.78
+    canvas[y0:y1, x0:x1] = fabric
+    img = Image.fromarray((np.clip(canvas, 0, 1) * 255).astype(np.uint8))
+    if label:
+        # тканый ярлык Forest, вшит в левую кромку
+        lw, lh = int(w * 0.23), int(w * 0.082)
+        lab = Image.new("RGB", (lw, lh), (2, 68, 41))
+        la = np.asarray(lab).astype(np.float32) / 255
+        ly, lx = grid(lh, lw)
+        la *= (0.92 + 0.08 * np.sin(ly / 1.6))[..., None]  # тканая структура
+        la *= (1.04 - 0.1 * (lx / lw))[..., None]
+        lab = Image.fromarray((np.clip(la, 0, 1) * 255).astype(np.uint8))
+        wm = Image.open(os.path.join(BRAND, "wordmark-hd-cream.png"))
+        ww = int(lw * 0.74)
+        wm = wm.resize((ww, int(wm.height * ww / wm.width)), Image.LANCZOS)
+        lab.paste(wm, ((lw - ww) // 2 + int(lw * 0.04), (lh - wm.height) // 2), wm)
+        lx0 = x0 - int(lw * 0.18)
+        ly0 = y0 + int((y1 - y0) * 0.62)
+        shadow = Image.new("L", (lw + 40, lh + 40), 0)
+        shadow.paste(60, (20, 26, 20 + lw, 26 + lh))
+        shadow = shadow.filter(ImageFilter.GaussianBlur(6))
+        dark = Image.new("RGB", shadow.size, (40, 36, 30))
+        img.paste(dark, (lx0 - 20, ly0 - 20), shadow)
+        img.paste(lab, (lx0, ly0))
+    a = np.asarray(img).astype(np.float32) / 255
+    a += np.random.default_rng(seed + 9).normal(0, 0.008, a.shape)
+    return Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8))
+
+
+COMBOS = {
+    "terry": ["white", "milk", "sand", "sage", "emerald", "walnut"],
+    "waffle": ["white", "milk", "beige", "sage"],
+    "linen": ["white", "milk", "beige", "sand", "taupe", "sage", "emerald"],
+    "satin": ["white", "milk", "beige", "sage"],
+    "knit": ["milk", "walnut", "sand", "emerald"],
+    "quilt": ["white", "milk", "beige", "sand"],
+    "crinkle": ["milk", "beige", "taupe"],
+    "herringbone": ["milk", "taupe", "emerald", "walnut"],
+}
+
 if __name__ == "__main__":
     import sys
     only = sys.argv[1:] or ["textures", "products"]
@@ -368,7 +390,8 @@ if __name__ == "__main__":
             save(render_macro(wv, c, 100 + i), OUT_T, f"{wv}-{c}.jpg")
     if "products" in only:
         # макро + пакшот для каждой комбинации ткани и цвета, используемой в каталоге
-        combos = {
+        combos = COMBOS
+        _unused = {
             "terry": ["white", "milk", "sand", "sage", "emerald", "walnut"],
             "waffle": ["white", "milk", "beige", "sage"],
             "linen": ["white", "milk", "beige", "sand", "taupe", "sage", "emerald"],
@@ -384,3 +407,8 @@ if __name__ == "__main__":
                 save(render_macro(wv, c, seed, drape_k=1.2), OUT_P, f"{wv}-{c}-detail.jpg")
                 save(render_macro(wv, c, seed + 1, drape_k=0.35, zoom_k=2.2, light=(0.5, -0.7, 0.6)),
                      OUT_P, f"{wv}-{c}-close.jpg")
+    if "swatches" in only or "products" in only:
+        for wv, cs in COMBOS.items():
+            for c in cs:
+                seed = 300 + sum(map(ord, wv + c)) * 7 % 1000
+                save(render_swatch(wv, c, seed), OUT_P, f"{wv}-{c}-swatch.jpg")

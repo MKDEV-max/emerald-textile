@@ -30,7 +30,7 @@ export function Newsletter({ tone = "dark" }: { tone?: "dark" | "light" }) {
       <p className={s.lead}>Раз в месяц: новинки, советы по уходу и закрытые предложения.</p>
       {state === "done" ? (
         <p className={s.done} role="status">
-          <Icon name="check" size={18} /> Спасибо! Подтверждение придёт на {email}.
+          <Icon name="check" size={18} /> Спасибо! Это демо-витрина — письма пока не отправляются.
         </p>
       ) : (
         <form className={s.form} onSubmit={submit} noValidate aria-labelledby={`${id}-title`}>

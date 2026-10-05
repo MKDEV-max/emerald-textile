@@ -59,6 +59,36 @@ export const PHOTOS = {
     alt: "Фирменная упаковка — многоразовый тёмно-зелёный мешок на шнурке",
     kind: "packshot",
   },
+  cropQuilt: {
+    src: "/images/brand/crop-quilt.jpg",
+    alt: "Стёжка «волна» на молочном одеяле крупным планом",
+    kind: "detail",
+  },
+  cropKnit: {
+    src: "/images/brand/crop-knit.jpg",
+    alt: "Косы крупной вязки на пледе орехового цвета",
+    kind: "detail",
+  },
+  cropLaceTable: {
+    src: "/images/brand/crop-lace-table.jpg",
+    alt: "Кружевной угол белой скатерти над деревянным столом",
+    kind: "detail",
+  },
+  cropLaceBed: {
+    src: "/images/brand/crop-lace-bed.jpg",
+    alt: "Кружевной край одеяла в мягком дневном свете",
+    kind: "detail",
+  },
+  cropPillows: {
+    src: "/images/brand/crop-pillows.jpg",
+    alt: "Стопка стёганых подушек крупным планом",
+    kind: "detail",
+  },
+  cropBedLinen: {
+    src: "/images/brand/crop-bed-linen.jpg",
+    alt: "Складки постельного белья цвета слоновой кости",
+    kind: "detail",
+  },
   cloud: {
     src: "/images/brand/cloud-closeup.jpg",
     alt: "Облако хлопкового волокна на тёплом бежевом фоне",
@@ -78,7 +108,13 @@ const WEAVE_NAMES: Record<Weave, string> = {
 };
 
 /** Макро-кадр ткани в выбранном цвете */
-export function textileImage(weave: Weave, color: ColorKey, variant: "detail" | "close" = "detail"): ImageAsset {
+export function textileImage(weave: Weave, color: ColorKey, variant: "detail" | "close" | "swatch" = "detail"): ImageAsset {
+  if (variant === "swatch")
+    return {
+      src: `/images/products/${weave}-${color}-swatch.jpg`,
+      alt: `Образец ${WEAVE_NAMES[weave]} цвета «${COLORS[color].name.toLowerCase()}» с тканым ярлыком Emerald Textile`,
+      kind: "packshot",
+    };
   return {
     src: `/images/products/${weave}-${color}-${variant}.jpg`,
     alt:

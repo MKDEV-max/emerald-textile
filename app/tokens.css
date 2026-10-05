@@ -21,35 +21,48 @@
   --color-neutral: #d9d9d9;        /* разделители, плейсхолдеры, disabled */
 
   /* Роли */
-  --color-bg: var(--color-white);
-  --color-bg-alt: var(--color-ivory);
+  /*
+   * Иерархия цвета (v2):
+   * Ivory — пространство и воздух · Emerald — акцент бренда ·
+   * Deep Emerald — текст, CTA, структура · Forest — глубокий фон ·
+   * Taupe / Walnut — тёплые editorial-акценты (подписи, номера разделов).
+   */
+  --color-bg: var(--color-ivory);
+  --color-bg-alt: var(--color-white);
   --color-bg-dark: var(--color-forest);
-  --color-text: var(--color-emerald);
+  --color-text: var(--color-deep-emerald);
   --color-text-strong: var(--color-deep-emerald);
-  --color-text-muted: #2f6e56;     /* Emerald, приглушённый для служебного текста (контраст ≥ 5:1) */
+  --color-text-muted: #4f6458;     /* приглушённый зелёно-серый, контраст ≥ 5:1 на Ivory */
+  --color-text-warm: var(--color-taupe);
   --color-text-inverse: var(--color-cream);
   --color-accent: var(--color-emerald);
-  --color-border: var(--color-emerald);
-  --color-border-soft: rgb(2 90 58 / 0.35); /* Emerald 35% — служебные линии */
-  --color-border-faint: rgb(2 90 58 / 0.14);
+  --color-cta: var(--color-deep-emerald);
+  --color-cta-hover: var(--color-forest);
+  --color-paper: #efece5;          /* бумага для образцов ткани */
+  --color-border: var(--color-deep-emerald);
+  --color-border-soft: rgb(3 72 49 / 0.22); /* архитектурные hairline-линии */
+  --color-border-faint: rgb(3 72 49 / 0.1);
   --color-overlay: rgb(19 40 28 / 0.92);    /* Night Forest 92% */
   --color-scrim: rgb(19 40 28 / 0.4);
   --color-error: #8a2e1f;          /* тёплый кирпичный — только для ошибок форм */
 
   /* ── 05 · Typography ───────────────────────────────── */
   /*
-   * Display: брендбук задаёт JOURNALISM, но все его доски (шкала, сайт, каталог)
-   * свёрстаны на указанном там же фолбэке Oranienbaum в смешанном регистре.
-   * Локально установленный JOURNALISM — капительный, поэтому он намеренно
-   * не стоит первым в стеке: иначе сайт выглядел бы по-разному у разных
-   * посетителей. Чтобы включить лицензионный веб-шрифт, подключите его
-   * через @font-face и добавьте имя в начало этого стека.
+   * Display: брендбук задаёт JOURNALISM — узкую контрастную капительную антикву.
+   * У имеющегося файла шрифта нет лицензии на веб-распространение, поэтому
+   * используется Noto Serif Display (OFL) в сжатом начертании (wdth 62.5)
+   * и верхнем регистре — визуально ближайшая открытая замена. Чтобы включить
+   * JOURNALISM, подключите лицензионный веб-файл через @font-face и поставьте
+   * его первым в этот стек.
    */
-  --font-display: var(--font-oranienbaum), "Oranienbaum", "Times New Roman", serif;
+  --font-display: var(--font-display-face), "Times New Roman", serif;
   --font-text: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont,
     var(--font-inter), "Helvetica Neue", Arial, system-ui, sans-serif;
 
-  --tracking-display: -0.05em;  /* JOURNALISM: трекинг −5% */
+  --tracking-display: -0.005em; /* капитель в сжатом начертании: −5% брендбука даёт слипание */
+  --tracking-display-s: 0.04em; /* мелкие капительные заголовки */
+  --display-stretch: 62.5%;
+  --display-weight: 400;
   --tracking-label: 0.14em;     /* Label / Caps: +14% */
   --tracking-button: 0.08em;    /* Button / Label: +8% */
   --tracking-caption: 0.02em;   /* Caption: +2% */
@@ -57,11 +70,11 @@
   /* Шкала (desktop-значения брендбука, адаптивно через clamp) */
   --text-display-xl: clamp(72px, 12.5vw, 180px);  /* 180 / 100% */
   --text-display-l: clamp(52px, 8.4vw, 120px);    /* 120 / 100% */
-  --text-hero: clamp(46px, 6.1vw, 88px);          /* hero сайта: JOURNALISM 104 в брендбуке для короткого заголовка; 88 — для заголовка в 3 строки */
-  --text-h1: clamp(40px, 5vw, 72px);              /* 72 / 105% */
+  --text-hero: clamp(58px, 10.4vw, 150px);        /* hero: капитель в сжатом начертании */
+  --text-h1: clamp(42px, 5vw, 72px);              /* 72 / 105% */
   --text-h2: clamp(32px, 3.34vw, 48px);           /* 48 / 110% */
   --text-h3: clamp(24px, 2.23vw, 32px);           /* 32 / 115% */
-  --text-h4: 24px;                                /* название товара в карточке */
+  --text-h4: 18px;                                /* название товара в карточке */
   --text-body-l: clamp(18px, 1.39vw, 20px);       /* 20 / 150% */
   --text-body: 16px;                              /* 16 / 150% */
   --text-body-s: 13px;                            /* 13 / 150% */
@@ -70,10 +83,10 @@
   --text-tag: 10px;                               /* теги и бейджи: 10 px caps */
   --text-caption: 11px;                           /* 11 / 140% / +2% */
 
-  --leading-display: 1;
-  --leading-h1: 1.05;
-  --leading-h2: 1.1;
-  --leading-h3: 1.15;
+  --leading-display: 0.92;
+  --leading-h1: 0.98;
+  --leading-h2: 1.02;
+  --leading-h3: 1.08;
   --leading-body: 1.5;
   --leading-caption: 1.4;
 
@@ -112,7 +125,7 @@
   --button-height: 52px;
   --button-height-s: 40px;
   --button-pad-x: 32px;
-  --header-height: 88px;
+  --header-height: 96px;
   --header-height-mobile: 64px;
 
   /* ── 06 · Grid & Layout ────────────────────────────── */

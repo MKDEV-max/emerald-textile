@@ -6,9 +6,10 @@ import { useRef, useState } from "react";
 import type { Order } from "@/lib/types";
 import { getProduct } from "@/lib/data/products";
 import { COLORS } from "@/lib/data/colors";
-import { priceFor, productGallery } from "@/lib/catalog";
+import { priceFor, productThumb } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { useStore } from "@/lib/store";
+import { submitOrder } from "@/lib/api/orders";
 import { Button } from "@/components/Button";
 import { FREE_SHIPPING } from "@/components/CartLines";
 import { Icon } from "@/components/Icon";
@@ -19,7 +20,6 @@ import s from "./checkout.module.css";
 const DELIVERY = [
   { id: "courier", title: "Курьером", text: "Москва — 1–2 дня, Россия — 2–5 дней", price: 590 },
   { id: "pickup", title: "В пункт выдачи", text: "Более 20 000 пунктов по России, 2–6 дней", price: 290 },
-  { id: "showroom", title: "Самовывоз из шоурума", text: "Москва, ежедневно с 10:00 до 21:00", price: 0 },
 ] as const;
 
 const PAYMENT = [
@@ -58,12 +58,10 @@ function validate(v: Record<Field, string>, delivery: string): Partial<Record<Fi
   const e: Partial<Record<Field, string>> = {};
   if (v.firstName.trim().length < 2) e.firstName = "Укажите имя";
   if (v.lastName.trim().length < 2) e.lastName = "Укажите фамилию";
-  if (v.phone.replace(/\D/g, "").length !== 11) e.phone = "Введите телефон полностью: +7 (000) 000-00-00";
+  if (v.phone.replace(/\D/g, "").length !== 11) e.phone = "Введите номер полностью — 10 цифр после +7";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim())) e.email = "Проверьте email — например, name@mail.ru";
-  if (delivery !== "showroom") {
-    if (v.city.trim().length < 2) e.city = "Укажите город";
-    if (v.address.trim().length < 5) e.address = "Укажите улицу, дом и квартиру";
-  }
+  if (v.city.trim().length < 2) e.city = "Укажите город";
+  if (v.address.trim().length < 5) e.address = "Укажите улицу, дом и квартиру";
   return e;
 }
 
@@ -84,10 +82,11 @@ export function CheckoutView() {
   const [touched, setTouched] = useState(false);
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState<Order | null>(null);
+  const [submitError, setSubmitError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
   const d = DELIVERY.find((x) => x.id === delivery)!;
-  const deliveryPrice = cartTotal >= FREE_SHIPPING || d.price === 0 ? 0 : d.price;
+  const deliveryPrice = cartTotal >= FREE_SHIPPING ? 0 : d.price;
   const total = cartTotal + deliveryPrice;
 
   const set = (k: Field, v: string) => {
@@ -96,7 +95,7 @@ export function CheckoutView() {
     if (touched) setErrors(validate(next, delivery));
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
     const errs = validate(values, delivery);
@@ -107,23 +106,23 @@ export function CheckoutView() {
       return;
     }
     setSending(true);
-    window.setTimeout(() => {
-      const order: Order = {
-        number: `ET-${String(Date.now()).slice(-6)}`,
-        createdAt: new Date().toISOString(),
-        lines: cart,
-        total,
-        delivery: d.title,
-        payment: PAYMENT.find((p) => p.id === payment)!.title,
-        name: values.firstName.trim(),
-        city: delivery === "showroom" ? "Москва" : values.city.trim(),
-      };
-      saveOrder(order);
-      clearCart();
-      setSending(false);
-      setDone(order);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1200);
+    const result = await submitOrder({
+      lines: cart,
+      total,
+      customer: { firstName: values.firstName.trim(), lastName: values.lastName.trim(), phone: values.phone, email: values.email.trim() },
+      delivery: { method: d.title, city: values.city.trim(), address: values.address.trim() },
+      payment: PAYMENT.find((p) => p.id === payment)!.title,
+      comment,
+    });
+    setSending(false);
+    if (!result.ok || !result.order) {
+      setSubmitError(result.error ?? "Не удалось оформить заказ. Попробуйте ещё раз.");
+      return;
+    }
+    saveOrder(result.order);
+    clearCart();
+    setDone(result.order);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (done) return <Success order={done} email={values.email} />;
@@ -133,6 +132,9 @@ export function CheckoutView() {
       <div className={s.head}>
         <Breadcrumbs items={[{ label: "Корзина", href: "/cart" }, { label: "Оформление заказа" }]} />
         <h1 className="t-h1">Оформление заказа</h1>
+        <p className={s.demo} role="note">
+          Демонстрационный режим: оплата не проводится, заказ сохраняется только в этом браузере.
+        </p>
       </div>
 
       {!ready ? (
@@ -181,7 +183,7 @@ export function CheckoutView() {
                       type={k === "email" ? "email" : k === "phone" ? "tel" : "text"}
                       inputMode={k === "phone" ? "tel" : k === "email" ? "email" : undefined}
                       autoComplete={{ firstName: "given-name", lastName: "family-name", phone: "tel", email: "email", city: "address-level2", address: "street-address" }[k]}
-                      placeholder={{ firstName: "Анна", lastName: "Изумрудова", phone: "+7 (000) 000-00-00", email: "name@mail.ru", city: "", address: "" }[k]}
+                      placeholder={{ firstName: "", lastName: "", phone: "+7 (___) ___-__-__", email: "name@mail.ru", city: "", address: "" }[k]}
                       aria-invalid={!!errors[k]}
                       aria-describedby={errors[k] ? `e-${k}` : undefined}
                       required
@@ -202,7 +204,7 @@ export function CheckoutView() {
               </legend>
               <div className={s.options} role="radiogroup">
                 {DELIVERY.map((o) => {
-                  const price = o.price === 0 || cartTotal >= FREE_SHIPPING ? "Бесплатно" : formatPrice(o.price);
+                  const price = cartTotal >= FREE_SHIPPING ? "Бесплатно" : formatPrice(o.price);
                   return (
                     <label key={o.id} className={s.option}>
                       <input type="radio" name="delivery" value={o.id} checked={delivery === o.id} onChange={() => setDelivery(o.id)} />
@@ -216,8 +218,7 @@ export function CheckoutView() {
                   );
                 })}
               </div>
-              {delivery !== "showroom" ? (
-                <div className={s.fields}>
+              <div className={s.fields}>
                   {(["city", "address"] as Field[]).map((k) => (
                     <div key={k} className={`field ${k === "address" ? s.wide : ""}`}>
                       <label className="field-label" htmlFor={`f-${k}`}>
@@ -243,12 +244,6 @@ export function CheckoutView() {
                     </div>
                   ))}
                 </div>
-              ) : (
-                <p className={s.note}>
-                  <Icon name="pin" size={20} /> Шоурум Emerald Textile: Москва, ул. Садовая, 1. Заказ будет готов к выдаче через 2 часа — мы пришлём
-                  сообщение.
-                </p>
-              )}
             </fieldset>
 
             <fieldset className={s.fieldset}>
@@ -295,7 +290,7 @@ export function CheckoutView() {
                 {cart.map((l) => {
                   const p = getProduct(l.slug);
                   if (!p) return null;
-                  const img = productGallery(p, l.color).find((i) => i.kind === "macro")!;
+                  const img = productThumb(p, l.color);
                   return (
                     <li key={l.id} className={s.miniLine}>
                       <span className={s.miniThumb}>
@@ -330,6 +325,11 @@ export function CheckoutView() {
               <Button type="submit" block loading={sending} disabled={sending}>
                 Оформить заказ
               </Button>
+              {submitError && (
+                <p className="field-error" role="alert">
+                  {submitError}
+                </p>
+              )}
               <p className={s.legal}>Нажимая кнопку, вы соглашаетесь с условиями продажи и обработкой персональных данных.</p>
             </div>
           </aside>
@@ -349,7 +349,8 @@ function Success({ order, email }: { order: Order; email: string }) {
         <p className="t-label">Заказ {order.number}</p>
         <h1 className="t-display-l">Спасибо, {order.name}!</h1>
         <p className="t-body-l t-strong" style={{ maxWidth: "56ch" }}>
-          Заказ оформлен. Мы отправили подтверждение на {email} и свяжемся с вами, чтобы уточнить детали доставки.
+          Заказ оформлен и сохранён в личном кабинете. Это демонстрационная витрина: оплата не списывается, письма не отправляются,
+          а заказ не передаётся в доставку.
         </p>
         <dl className={s.successSpecs}>
           <div>
@@ -369,9 +370,9 @@ function Success({ order, email }: { order: Order; email: string }) {
           <NumberedModules
             columns={3}
             items={[
-              { title: "Собираем заказ", text: "Проверяем каждое изделие и складываем в многоразовый мешок." },
-              { title: "Передаём в доставку", text: "Пришлём номер отправления в течение 1–2 дней." },
-              { title: "Встречайте", text: "Постирайте текстиль перед первым использованием — он станет ещё мягче." },
+              { title: "Подтверждение", text: "В рабочей версии магазина здесь будет письмо с деталями заказа." },
+              { title: "Сборка и доставка", text: "Изделия упаковываются в многоразовый мешок и передаются в доставку." },
+              { title: "Первая стирка", text: "Постирайте текстиль перед первым использованием по рекомендациям на ярлыке." },
             ]}
           />
         </div>

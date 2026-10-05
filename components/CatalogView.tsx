@@ -30,7 +30,7 @@ const PAGE = 12;
 type ListKey = "category" | "type" | "collection" | "material" | "color" | "size";
 
 /** Каталог: фильтры, сортировка, активные фильтры, постраничная подгрузка. Состояние — в URL. */
-export function CatalogView({ category }: { category?: CategorySlug }) {
+export function CatalogView({ category, editorial }: { category?: CategorySlug; editorial?: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -89,17 +89,6 @@ export function CatalogView({ category }: { category?: CategorySlug }) {
 
   return (
     <div className={s.layout}>
-      <aside className={s.sidebar} aria-label="Фильтры">
-        <div className={s.sidebarHead}>
-          <h2 className="t-label">Фильтр</h2>
-          {active > 0 && (
-            <button type="button" className={s.reset} onClick={reset}>
-              Сбросить
-            </button>
-          )}
-        </div>
-        {panel}
-      </aside>
 
       <div className={s.main}>
         <div className={s.toolbar}>
@@ -160,7 +149,15 @@ export function CatalogView({ category }: { category?: CategorySlug }) {
             />
           ) : (
             <>
-              <ProductGrid products={shown} columns={3} priorityCount={3} label="Товары" />
+              {editorial && active === 0 && !filters.q && shown.length > 6 ? (
+                <>
+                  <ProductGrid products={shown.slice(0, 6)} columns={3} priorityCount={3} label="Товары" />
+                  <div className={s.editorial}>{editorial}</div>
+                  <ProductGrid products={shown.slice(6)} columns={3} label="Товары, продолжение" />
+                </>
+              ) : (
+                <ProductGrid products={shown} columns={3} priorityCount={3} label="Товары" />
+              )}
               <div className={s.more}>
                 <p className={s.moreText}>
                   Показано {shown.length} из {results.length}

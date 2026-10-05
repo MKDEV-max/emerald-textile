@@ -63,6 +63,10 @@
   font-size: var(--text-body-s);
 }
 
+.list {
+  opacity: 0.92;
+}
+
 .list a,
 .list button {
   color: var(--color-cream);
@@ -85,9 +89,10 @@
   opacity: 0.85;
 }
 
-.legal {
-  display: flex;
-  gap: var(--space-5);
+.demo {
+  max-width: 64ch;
+  text-align: right;
+  opacity: 0.75;
 }
 
 /* Тональная волна внизу — один графический акцент футера */

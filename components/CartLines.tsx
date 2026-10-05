@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { CartLine, ColorKey } from "@/lib/types";
 import { getProduct } from "@/lib/data/products";
 import { COLORS } from "@/lib/data/colors";
-import { priceFor, productGallery } from "@/lib/catalog";
+import { priceFor, productThumb } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import { QuantitySelector } from "./ui";
@@ -31,7 +31,7 @@ export function CartLines({ onNavigate, compact }: { onNavigate?: () => void; co
       {cart.map((line) => {
         const p = getProduct(line.slug);
         if (!p) return null;
-        const img = productGallery(p, line.color).find((i) => i.kind === "macro") ?? productGallery(p, line.color)[0];
+        const img = productThumb(p, line.color);
         const unit = priceFor(p, line.size);
         const href = `/product/${p.slug}${line.color !== p.colors[0] ? `?color=${line.color}` : ""}`;
         return (

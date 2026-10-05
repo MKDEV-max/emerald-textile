@@ -225,7 +225,7 @@ function NotifyForm({ productName, onDone }: { productName: string; onDone: () =
       setError("Введите корректный email — например, name@mail.ru");
       return;
     }
-    notify({ title: "Подписка оформлена", text: `Напишем, когда «${productName}» снова появится` });
+    notify({ title: "Запрос сохранён", text: "В демо-витрине уведомления не отправляются" });
     onDone();
   };
   return (
@@ -234,7 +234,7 @@ function NotifyForm({ productName, onDone }: { productName: string; onDone: () =
         Сообщить о поступлении
       </h2>
       <p className="t-body-s t-strong">
-        «{productName}» временно нет в наличии. Оставьте email — мы напишем, как только изделие вернётся.
+        «{productName}» временно нет в наличии. Оставьте email — в рабочей версии магазина мы напишем, когда изделие вернётся.
       </p>
       <div className="field">
         <label className="field-label" htmlFor="notify-email">

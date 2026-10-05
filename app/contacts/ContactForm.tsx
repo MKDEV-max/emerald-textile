@@ -33,8 +33,8 @@ export function ContactForm() {
         <span className={s.doneIcon}>
           <Icon name="check" size={28} />
         </span>
-        <h3 className="t-h3">Сообщение отправлено</h3>
-        <p className="t-body t-strong">Спасибо, {v.name}! Мы ответим на {v.email} в течение рабочего дня.</p>
+        <h3 className="t-h3">Сообщение принято</h3>
+        <p className="t-body t-strong">Спасибо, {v.name}! Это демонстрационная витрина — сообщение не отправляется, но форма работает так же, как будет работать в магазине.</p>
         <Button
           variant="link"
           arrow={false}

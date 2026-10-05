@@ -32,8 +32,13 @@
   display: grid;
   gap: var(--space-5);
   padding: var(--space-6);
-  border: var(--border);
-  background: var(--color-ivory);
+  background: var(--color-white);
+}
+
+.demo {
+  font-size: var(--text-body-s);
+  color: var(--color-text-warm);
+  max-width: 60ch;
 }
 
 .summaryHead {
@@ -73,8 +78,11 @@
   gap: var(--space-4);
   width: 100%;
   padding: 0 0 var(--space-4);
-  border-bottom: var(--border);
+  border-bottom: var(--border-soft);
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: var(--text-h3);
   letter-spacing: var(--tracking-display);
   line-height: 1.1;
@@ -344,9 +352,9 @@
 .successIcon {
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  border: var(--border);
+  width: 56px;
+  height: 56px;
+  color: var(--color-emerald);
 }
 
 .successSpecs {

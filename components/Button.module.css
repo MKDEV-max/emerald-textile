@@ -59,14 +59,14 @@
 
 /* Primary — Emerald (CTA) */
 .primary {
-  background: var(--color-emerald);
-  border-color: var(--color-emerald);
+  background: var(--color-cta);
+  border-color: var(--color-cta);
   color: var(--color-cream);
 }
 
 .primary:hover {
-  background: var(--color-deep-emerald);
-  border-color: var(--color-deep-emerald);
+  background: var(--color-cta-hover);
+  border-color: var(--color-cta-hover);
 }
 
 .primary:active {
@@ -82,13 +82,12 @@
 /* Secondary — контур 1 px */
 .secondary {
   background: transparent;
-  border-color: var(--color-emerald);
-  color: var(--color-emerald);
+  border-color: var(--color-border-soft);
+  color: var(--color-deep-emerald);
 }
 
 .secondary:hover {
-  background: var(--color-emerald);
-  color: var(--color-cream);
+  border-color: var(--color-deep-emerald);
 }
 
 .secondary:active {
@@ -107,7 +106,7 @@
   padding: var(--space-2) 0;
   border: 0;
   border-bottom: var(--line) solid currentColor;
-  color: var(--color-emerald);
+  color: var(--color-deep-emerald);
   background: transparent;
 }
 
@@ -123,7 +122,7 @@
 .inverse {
   background: var(--color-cream);
   border-color: var(--color-cream);
-  color: var(--color-emerald);
+  color: var(--color-deep-emerald);
 }
 
 .inverse:hover {

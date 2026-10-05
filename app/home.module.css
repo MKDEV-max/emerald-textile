@@ -1,253 +1,594 @@
-/* ── Философия ─────────────────────────────────────── */
-.manifestoGrid {
+/* ── 01 Hero ───────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: min(calc(100svh - var(--header-height)), 940px);
+  max-width: var(--page-max);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.heroMedia {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 58%;
+}
+
+.heroGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: inherit;
+  padding-block: var(--space-7) var(--space-8);
+  pointer-events: none;
+}
+
+.heroGrid > * {
+  pointer-events: auto;
+}
+
+.heroIndex {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.heroTitle {
+  align-self: center;
+  display: grid;
+  margin: var(--space-7) 0;
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: var(--text-hero);
+  line-height: 0.9;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-deep-emerald);
+}
+
+.heroTitle span {
+  display: block;
+  white-space: nowrap;
+}
+
+.heroIndent {
+  padding-left: 8.333%;
+}
+
+.heroIndent2 {
+  padding-left: 41.666%;
+}
+
+.heroFoot {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 400px;
+}
+
+.heroLead {
+  font-size: var(--text-body);
+  color: var(--color-text-strong);
+}
+
+.heroCtas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-5) var(--space-6);
+}
+
+/* ── 02 Пауза ──────────────────────────────────────── */
+.pause {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--space-6) var(--grid-gutter);
-  margin-bottom: var(--space-9);
+  padding-block: calc(var(--section) * 1.4);
 }
 
-.manifestoLabel {
+.pauseIndex {
   grid-column: 1 / span 3;
-  padding-top: var(--space-4);
-}
-
-.manifestoTitle {
-  grid-column: 4 / span 9;
-}
-
-.manifestoText {
-  grid-column: 7 / span 5;
-  display: grid;
-  justify-items: start;
-  gap: var(--space-5);
-  color: var(--color-text-strong);
-}
-
-@media (max-width: 1023px) {
-  .manifestoLabel,
-  .manifestoTitle,
-  .manifestoText {
-    grid-column: 1 / -1;
-  }
-
-  .manifestoGrid {
-    margin-bottom: var(--space-8);
-  }
-}
-
-/* ── Коллекция ─────────────────────────────────────── */
-.feature {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
-  max-width: var(--page-max);
-  margin-inline: auto;
-  border-block: var(--border);
-}
-
-.featureMedia {
-  position: relative;
-  min-height: 760px;
-  border-right: var(--border);
-}
-
-.featurePanel {
-  display: grid;
-  grid-template-rows: 1fr auto;
-}
-
-.featureInner {
-  display: grid;
-  align-content: center;
-  gap: var(--space-5);
-  padding: var(--space-9) var(--grid-margin) var(--space-7) var(--space-8);
-}
-
-.featureTags {
   display: flex;
-  gap: var(--space-1);
-}
-
-.featureSpecs {
-  display: grid;
-  gap: var(--space-3);
-  padding-block: var(--space-4);
-  border-block: var(--border-soft);
-}
-
-.featureSpecs > div {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: var(--space-3);
-  align-items: baseline;
-}
-
-.featureSpecs dd {
-  font-size: var(--text-body-s);
-  color: var(--color-text-strong);
-}
-
-.featureCtas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-5) var(--space-6);
-  align-items: center;
-  margin-top: var(--space-2);
-}
-
-.featureDetail {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: var(--space-4);
-  align-items: end;
-  padding: 0 var(--grid-margin) var(--space-7) var(--space-8);
+  padding-top: var(--space-3);
 }
 
-@media (max-width: 1023px) {
-  .feature {
-    grid-template-columns: 1fr;
-  }
-
-  .featureMedia {
-    min-height: 0;
-    aspect-ratio: 4 / 5;
-    border-right: 0;
-    border-bottom: var(--border);
-  }
-
-  .featureInner,
-  .featureDetail {
-    padding-inline: var(--grid-margin);
-  }
-
-  .featureInner {
-    padding-top: var(--space-8);
-  }
+.pauseText {
+  grid-column: 4 / span 8;
+  font-size: clamp(40px, 4.6vw, 68px);
+  line-height: 1;
+  color: var(--color-deep-emerald);
 }
 
-@media (max-width: 767px) {
-  .featureSpecs > div {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-
-  .featureDetail {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Тактильность ──────────────────────────────────── */
-.tactile {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--grid-gutter);
-}
-
-@media (max-width: 1023px) {
-  .tactile {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: var(--space-7);
-  }
-}
-
-/* ── Коллекции на Forest ───────────────────────────── */
-.collectionsHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: var(--space-5);
-  margin-bottom: var(--space-7);
-}
-
-.collectionsList {
-  border-top: var(--line) solid rgb(255 247 230 / 0.35);
-}
-
-.collectionRow {
-  display: grid;
-  grid-template-columns: 64px 4fr 5fr 2fr;
-  align-items: baseline;
-  gap: var(--grid-gutter);
-  padding-block: var(--space-6);
-  border-bottom: var(--line) solid rgb(255 247 230 / 0.35);
-  transition: padding var(--duration) var(--ease), background-color var(--duration) var(--ease);
-}
-
-.collectionRow:hover {
-  padding-left: var(--space-4);
-  background: rgb(255 247 230 / 0.04);
-}
-
-.collectionIndex {
+.pauseLink {
+  grid-column: 9 / span 4;
   font-size: var(--text-tag);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
 }
 
-.collectionName {
-  font-family: var(--font-display);
-  font-size: var(--text-h2);
-  line-height: 1.05;
-  letter-spacing: var(--tracking-display);
+/* ── 03 Full-bleed ─────────────────────────────────── */
+.bleed {
+  margin: 0;
 }
 
-.collectionLead {
-  font-size: var(--text-body);
-  opacity: 0.88;
+.bleedCaption {
+  display: grid;
+  grid-template-columns: 1fr 6fr 5fr;
+  gap: var(--grid-gutter);
+  padding-block: var(--space-4);
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
 }
 
-.collectionSeason {
+.bleedLink {
   justify-self: end;
   font-size: var(--text-tag);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  opacity: 0.75;
+  color: var(--color-deep-emerald);
 }
 
+/* ── 04 Выбор сезона ───────────────────────────────── */
+.season {
+  padding-block: var(--section);
+}
+
+.seasonHead,
+.rowHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.rowLink {
+  margin-left: auto;
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.seasonGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
+}
+
+.seasonLead {
+  grid-column: 1 / span 6;
+}
+
+.seasonLeadLink {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.seasonLeadText {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.seasonPrice {
+  font-size: var(--text-body-s);
+  font-weight: 500;
+}
+
+.seasonItem {
+  grid-column: 8 / span 2;
+  margin-top: var(--space-9);
+}
+
+.seasonItemLow {
+  grid-column: 10 / span 3;
+  margin-top: calc(var(--space-9) * 2.4);
+}
+
+/* ── 05 Атлас ──────────────────────────────────────── */
+.atlasSection {
+  padding-block: var(--section);
+  background: var(--color-white);
+}
+
+.atlasHead {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-4) var(--grid-gutter);
+  margin-bottom: var(--space-8);
+}
+
+.atlasHead > :first-child {
+  grid-column: 1 / -1;
+}
+
+.atlasHead h2 {
+  grid-column: 1 / span 7;
+}
+
+.atlasLead {
+  grid-column: 9 / span 4;
+  align-self: end;
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
+}
+
+/* ── 06 Story ──────────────────────────────────────── */
+.story {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  padding-block: var(--section);
+  align-items: start;
+}
+
+.storyMedia {
+  grid-column: 1 / span 7;
+}
+
+.storyText {
+  grid-column: 9 / span 4;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+  padding-left: var(--space-6);
+  border-left: var(--border-soft);
+  margin-top: var(--space-9);
+}
+
+.storyBody {
+  font-size: var(--text-body-l);
+  line-height: 1.6;
+  color: var(--color-text-strong);
+}
+
+.storyDetail {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-7);
+}
+
+/* ── 07 Новинки ────────────────────────────────────── */
+.news {
+  padding-bottom: var(--section);
+}
+
+/* ── 08 Statement ──────────────────────────────────── */
+.statement {
+  position: relative;
+  background: var(--color-forest);
+  color: var(--color-cream);
+  overflow: hidden;
+}
+
+.statementInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-7);
+  padding-top: var(--space-10);
+  padding-bottom: 300px;
+}
+
+.statementText {
+  font-size: clamp(44px, 7.4vw, 112px);
+  line-height: 0.92;
+  max-width: 11ch;
+}
+
+.statementSub {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.statementWave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 42%;
+}
+
+.statementWave img {
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ── 09 Коллекция ──────────────────────────────────── */
+.collection {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+
+.collectionMedia {
+  position: relative;
+  min-height: 820px;
+}
+
+.collectionText {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-5);
+  padding: var(--space-9) var(--grid-margin) var(--space-9) var(--space-8);
+}
+
+.collectionBody {
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-strong);
+}
+
+.collectionMeta {
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
+}
+
+.collectionList {
+  width: 100%;
+  margin-top: var(--space-6);
+  border-top: var(--border-soft);
+}
+
+.collectionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: var(--border-faint);
+  transition: padding var(--duration) var(--ease);
+}
+
+.collectionRow:hover {
+  padding-left: var(--space-3);
+}
+
+.collectionName {
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: var(--tracking-display-s);
+}
+
+.collectionSeason {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-warm);
+}
+
+/* ── 10 Журнал ─────────────────────────────────────── */
+.journal {
+  padding-block: var(--section);
+}
+
+.journalList {
+  border-top: var(--border-soft);
+}
+
+.journalRow {
+  display: grid;
+  grid-template-columns: 3fr 5fr 3fr 1.5fr;
+  gap: var(--grid-gutter);
+  align-items: start;
+  padding-block: var(--space-6);
+  border-bottom: var(--border-soft);
+}
+
+.journalMeta {
+  padding-top: 6px;
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-warm);
+}
+
+.journalTitle {
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
+  font-size: var(--text-h3);
+  line-height: 1;
+  transition: color var(--duration) var(--ease);
+}
+
+.journalRow:hover .journalTitle {
+  color: var(--color-emerald);
+}
+
+.journalLead {
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
+}
+
+/* ── Планшет ───────────────────────────────────────── */
 @media (max-width: 1023px) {
-  .collectionRow {
-    grid-template-columns: 48px 1fr;
-    row-gap: var(--space-2);
+  .hero {
+    min-height: 0;
   }
 
-  .collectionLead,
-  .collectionSeason {
+  .heroMedia {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .heroGrid {
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  .heroTitle {
+    margin: var(--space-5) 0 var(--space-7);
+    font-size: clamp(54px, 11vw, 110px);
+  }
+
+  .pauseIndex,
+  .pauseText,
+  .pauseLink {
+    grid-column: 1 / -1;
+  }
+
+  .bleedCaption {
+    grid-template-columns: auto 1fr;
+  }
+
+  .bleedLink {
     grid-column: 2;
     justify-self: start;
   }
-}
 
-@media (max-width: 767px) {
-  .collectionsHead {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-/* ── Журнал ────────────────────────────────────────── */
-.journal {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--grid-gutter);
-}
-
-@media (max-width: 1023px) {
-  .journal {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: var(--space-7);
+  .seasonLead {
+    grid-column: 1 / -1;
   }
 
-  .journal > li:nth-child(3) {
+  .seasonItem,
+  .seasonItemLow {
+    grid-column: span 4;
+    margin-top: var(--space-7);
+  }
+
+  .atlasHead h2,
+  .atlasLead {
+    grid-column: 1 / -1;
+  }
+
+  .storyMedia,
+  .storyText {
+    grid-column: 1 / -1;
+  }
+
+  .storyText {
+    margin-top: var(--space-7);
+  }
+
+  .collection {
+    grid-template-columns: 1fr;
+  }
+
+  .collectionMedia {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .collectionText {
+    padding: var(--space-8) var(--grid-margin);
+  }
+
+  .journalRow {
+    grid-template-columns: 1fr 3fr;
+  }
+
+  .journalLead {
+    grid-column: 2;
+  }
+
+  .journalThumb {
     display: none;
   }
 }
 
+/* ── Мобильный ─────────────────────────────────────── */
 @media (max-width: 767px) {
-  .journal {
-    grid-template-columns: 1fr;
+  .heroMedia {
+    aspect-ratio: 4 / 5;
   }
 
-  .journal > li:nth-child(3) {
-    display: block;
+  .heroTitle {
+    font-size: clamp(46px, 14vw, 72px);
+  }
+
+  .heroIndent,
+  .heroIndent2 {
+    padding-left: 0;
+  }
+
+  .heroTitle span {
+    white-space: normal;
+  }
+
+  .heroCtas > a:first-child {
+    width: 100%;
+  }
+
+  .pause {
+    padding-block: var(--space-9);
+  }
+
+  .bleed :global(div) {
+    aspect-ratio: 4 / 3 !important;
+  }
+
+  .bleedCaption {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .bleedLink {
+    grid-column: 1;
+  }
+
+  .seasonHead,
+  .rowHead {
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .seasonItem,
+  .seasonItemLow {
+    grid-column: span 2;
+  }
+
+  .seasonItemLow {
+    margin-top: var(--space-9);
+  }
+
+  .storyText {
+    padding-left: var(--space-4);
+  }
+
+  .statementInner {
+    padding-top: var(--space-9);
+    padding-bottom: 160px;
+  }
+
+  .statementWave {
+    max-height: 30%;
+  }
+
+  .collectionMedia {
+    aspect-ratio: 4 / 5;
+  }
+
+  .journalRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .journalLead {
+    grid-column: 1;
+  }
+
+  .rowLink {
+    margin-left: 0;
+    width: 100%;
   }
 }

@@ -1,42 +1,40 @@
-/* ── Tag / Badge — 10 px caps, padding 6/10 ───────────── */
+/* ── Tag — тихая caps-подпись вместо бейджа-рамки ───── */
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: 6px 10px;
+  gap: 6px;
   font-size: var(--text-tag);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  line-height: 1;
+  line-height: 1.2;
   white-space: nowrap;
-  border: var(--line) solid var(--color-emerald);
-  color: var(--color-emerald);
-  background: var(--color-white);
+  color: var(--color-text-warm);
 }
 
 .tagSolid {
-  background: var(--color-forest);
-  border-color: var(--color-forest);
-  color: var(--color-cream);
+  color: var(--color-emerald);
+}
+
+.tagSolid::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: currentColor;
 }
 
 .tagCream {
-  background: var(--color-cream);
-  border-color: var(--color-cream);
   color: var(--color-walnut);
 }
 
 .tagMuted {
-  background: transparent;
-  border-color: var(--color-neutral);
   color: var(--color-text-muted);
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  gap: var(--space-2) var(--space-4);
 }
 
 /* ── Wave — фирменная гравюрная волна ──────────────────── */
@@ -93,7 +91,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: var(--space-5);
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-8);
 }
 
 .sectionHeadText {
@@ -120,10 +118,11 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  font-size: var(--text-label);
+  font-size: var(--text-tag);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
+  color: var(--color-text-warm);
 }
 
 /* ── Свотчи — квадратные, R0 ───────────────────────────── */
@@ -218,16 +217,14 @@
   gap: var(--space-5);
   padding: var(--space-9) var(--space-5);
   text-align: center;
-  border: var(--border-soft);
-  background: var(--color-ivory);
+  background: var(--color-white);
 }
 
 .emptyIcon {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
-  border: var(--border);
+  width: 56px;
+  height: 56px;
   color: var(--color-emerald);
 }
 
