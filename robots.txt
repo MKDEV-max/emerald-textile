@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /cart
+Disallow: /checkout
+Disallow: /account
+Disallow: /wishlist
+
+Sitemap: https://emeraldtextile.ru/sitemap.xml
