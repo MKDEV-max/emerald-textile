@@ -1,61 +1,115 @@
-.cats {
+.page {
+  padding-top: var(--space-5);
+  padding-bottom: var(--section);
+}
+
+.intro {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--grid-gutter);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-5) var(--grid-gutter);
+  align-items: end;
   margin-top: var(--space-8);
+}
+
+.title {
+  grid-column: 1 / span 7;
+  font-size: var(--text-display-l);
+  line-height: 0.88;
+}
+
+.lead {
+  grid-column: 9 / span 4;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-strong);
 }
 
 .catalog {
   padding-bottom: var(--section);
 }
 
-/* Категория: подкатегории */
-.subnav {
-  border-block: var(--border);
+/* ── Категория ─────────────────────────────────────── */
+.catHero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  min-height: min(calc(100svh - var(--header-height)), 820px);
 }
 
-.subnavList {
+/* у каждого пространства свой тон (время суток) */
+.tone_bathroom {
+  --cat-tone: #f1f2ed;
+}
+
+.tone_dining {
+  --cat-tone: #f6f1e7;
+}
+
+.tone_living {
+  --cat-tone: #efe8df;
+}
+
+.tone_bedroom {
+  --cat-tone: #f3efe6;
+}
+
+.catHeroText {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: var(--space-5) var(--space-8) var(--space-8) var(--grid-margin);
+  background: var(--cat-tone, var(--color-ivory));
+}
+
+.catHeroBody {
+  display: grid;
+  align-content: end;
+  gap: var(--space-5);
+}
+
+.catTime {
   display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
+  gap: var(--space-4);
 }
 
-.subnavList::-webkit-scrollbar {
-  display: none;
+.catTitle {
+  font-size: clamp(56px, 7.4vw, 112px);
+  line-height: 0.9;
 }
 
-.subnavLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 60px;
-  padding: 0 var(--space-5);
-  border-left: var(--border-soft);
-  font-size: var(--text-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: background-color var(--duration-fast) var(--ease);
+.catMood {
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: none;
+  font-size: var(--text-h3);
+  line-height: 1.1;
+  color: var(--color-text-warm);
 }
 
-.subnavList > li:first-child .subnavLink {
-  border-left: 0;
-  padding-left: 0;
+.catLead {
+  max-width: 48ch;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-strong);
 }
 
-.subnavLink:hover {
-  background: var(--color-ivory);
+.catHeroMedia {
+  position: relative;
+  background: var(--color-paper);
 }
 
-.subnavCount {
-  font-weight: 400;
-  color: var(--color-text-muted);
-  letter-spacing: 0;
+.catBody {
+  padding-top: var(--space-4);
 }
 
-.catalogTop {
-  padding-top: var(--space-8);
+.subnav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  margin-bottom: var(--space-7);
+  font-size: var(--text-body-s);
+  color: var(--color-text-strong);
 }
 
 .seo {
@@ -63,7 +117,7 @@
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gutter);
   padding-block: var(--section);
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .seoTitle {
@@ -75,7 +129,7 @@
   columns: 2;
   column-gap: var(--grid-gutter);
   font-size: var(--text-body-s);
-  color: var(--color-text-strong);
+  color: var(--color-text-muted);
 }
 
 .seoText p {
@@ -84,11 +138,8 @@
 }
 
 @media (max-width: 1023px) {
-  .cats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: var(--space-6);
-  }
-
+  .title,
+  .lead,
   .seoTitle,
   .seoText {
     grid-column: 1 / -1;
@@ -98,16 +149,45 @@
     columns: 1;
     margin-top: var(--space-4);
   }
+
+  .catHero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .catHeroMedia {
+    order: -1;
+    aspect-ratio: 4 / 3;
+  }
+
+  .catHeroText {
+    padding: var(--space-5) var(--grid-margin) var(--space-8);
+  }
+
+  .catHeroBody {
+    margin-top: var(--space-7);
+  }
 }
 
 @media (max-width: 767px) {
-  .cats {
+  .intro {
     margin-top: var(--space-6);
-    gap: var(--space-5) var(--grid-gutter);
   }
 
-  .subnavLink {
-    min-height: 52px;
-    padding: 0 var(--space-4);
+  .catHeroMedia {
+    aspect-ratio: 4 / 5;
+  }
+
+  .catTitle {
+    font-size: clamp(44px, 13vw, 64px);
+  }
+
+  .subnav ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--grid-margin) * -1);
+    padding-inline: var(--grid-margin);
+    white-space: nowrap;
+    scrollbar-width: none;
   }
 }

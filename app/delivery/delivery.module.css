@@ -10,7 +10,7 @@
   grid-column: 1 / span 3;
   position: sticky;
   top: calc(72px + var(--space-6));
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .navLink {
@@ -46,12 +46,12 @@
   display: grid;
   gap: var(--space-6);
   padding-top: var(--space-6);
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .table {
   display: grid;
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .tr {
@@ -109,7 +109,7 @@
 .timeline {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .step {
@@ -132,7 +132,7 @@
 .care {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .careItem {

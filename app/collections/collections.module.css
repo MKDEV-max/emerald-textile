@@ -1,6 +1,6 @@
 .block {
   padding-block: var(--section);
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .alt {

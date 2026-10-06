@@ -18,10 +18,18 @@ export function productGallery(p: Product, color?: ColorKey): ImageAsset[] {
   return [
     ...photos,
     textileImage(p.weave, c, "swatch"),
-    textileImage(p.weave, c, "close"),
-    textileImage(p.weave, c, "detail"),
+    detailImage(p, c),
     PHOTOS.packaging,
   ];
+}
+
+/** Деталь изделия: реальный кроп из фотосъёмки, если он есть для этой фактуры, иначе — крупный план плетения */
+export function detailImage(p: Product, color?: ColorKey): ImageAsset {
+  if (p.collection === "s-kruzhevom") return p.category === "dining" ? PHOTOS.cropLaceTable : PHOTOS.cropLaceBed;
+  if (p.weave === "quilt") return PHOTOS.cropQuilt;
+  if (p.weave === "knit") return PHOTOS.cropKnit;
+  if (p.weave === "satin") return PHOTOS.cropBedLinen;
+  return textileImage(p.weave, color ?? p.colors[0], "close");
 }
 
 /** Миниатюра (корзина, поиск): образец ткани в выбранном цвете */

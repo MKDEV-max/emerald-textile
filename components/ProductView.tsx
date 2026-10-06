@@ -14,7 +14,7 @@ import { Button } from "./Button";
 import { Icon } from "./Icon";
 import { Modal } from "./Modal";
 import { ProductGallery } from "./ProductGallery";
-import { ColorSwatchGroup, QuantitySelector, Tag } from "./ui";
+import { ColorSwatchGroup, QuantitySelector } from "./ui";
 import s from "./ProductView.module.css";
 
 export function ProductView({ product: p, details }: { product: Product; details: AccordionItem[] }) {
@@ -80,26 +80,18 @@ export function ProductView({ product: p, details }: { product: Product; details
 
       <div className={s.info}>
         <div className={s.sticky}>
-          <div className={s.tags}>
-            {p.newArrival && <Tag tone="solid">Новинка</Tag>}
-            {p.bestseller && <Tag>Бестселлер</Tag>}
-            {p.oldPrice && <Tag tone="cream">Распродажа</Tag>}
-            <Tag tone="muted">Арт. {p.id.toUpperCase()}</Tag>
-          </div>
-
-          <h1 className={`t-h2 ${s.title}`}>{p.name}</h1>
-          <p className={s.meta}>
-            <Link href={`/catalog/${p.category}`} className="link-underline">
-              {categoryName(p.category)}
-            </Link>
-            {collection && (
-              <>
-                {" · "}
-                <Link href={`/collections/${collection.slug}`} className="link-underline">
-                  Коллекция «{collection.name}»
-                </Link>
-              </>
+          <p className={s.eyebrow}>
+            {collection ? (
+              <Link href={`/collections/${collection.slug}`}>Коллекция «{collection.name}»</Link>
+            ) : (
+              categoryName(p.category)
             )}
+            {p.newArrival && <span> · Новинка</span>}
+          </p>
+
+          <h1 className={`t-h1 ${s.title}`}>{p.name}</h1>
+          <p className={s.meta}>
+            {p.material} · {p.short}
           </p>
 
           <p className={s.price}>
@@ -111,9 +103,7 @@ export function ProductView({ product: p, details }: { product: Product; details
               </s>
             )}
           </p>
-          <p className={s.short}>
-            {p.short} · {p.composition}
-          </p>
+          <p className={s.short}>{p.composition}</p>
 
           <div className={s.option}>
             <p className={s.optionLabel} id="color-label">
@@ -162,30 +152,15 @@ export function ProductView({ product: p, details }: { product: Product; details
                 Добавить в корзину
               </Button>
             )}
-            <button
-              type="button"
-              className={`${s.wish} ${wished ? s.wished : ""}`}
-              onClick={wish}
-              aria-pressed={wished}
-              aria-label={wished ? "Убрать из избранного" : "Добавить в избранное"}
-            >
-              <Icon name="heart" size={22} />
-            </button>
           </div>
+          <button type="button" className={`${s.wish} ${wished ? s.wished : ""}`} onClick={wish} aria-pressed={wished}>
+            <Icon name="heart" size={16} />
+            {wished ? "В избранном" : "В избранное"}
+          </button>
 
-          <ul className={s.service}>
-            <li>
-              <Icon name="truck" size={20} /> Доставка по России 1–5 дней · бесплатно от 10 000 ₽
-            </li>
-            <li>
-              <Icon name="returns" size={20} /> Возврат и обмен в течение 14 дней
-            </li>
-            <li>
-              <Icon name="package" size={20} /> В многоразовом мешке Emerald Textile
-            </li>
-          </ul>
+          <p className={s.service}>Доставка по России · возврат 14 дней · многоразовый мешок</p>
 
-          <Accordion items={details} defaultOpen={["description"]} />
+          <Accordion items={details} size="s" />
         </div>
       </div>
 

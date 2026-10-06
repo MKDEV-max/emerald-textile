@@ -340,7 +340,7 @@ textarea {
 
 .rule {
   border: 0;
-  border-top: var(--border);
+  border-top: var(--border-soft);
   margin: 0;
 }
 

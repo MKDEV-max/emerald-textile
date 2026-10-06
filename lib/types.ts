@@ -47,6 +47,9 @@ export interface Category {
   slug: CategorySlug;
   name: string;
   shortName: string;
+  /** время суток — editorial-идентичность пространства */
+  time: string;
+  mood: string;
   lead: string;
   description: string;
   hero: ImageAsset;

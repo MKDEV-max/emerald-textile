@@ -1,0 +1,128 @@
+.nav {
+  margin-block: var(--space-8) var(--space-7);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-8);
+}
+
+.link {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  color: var(--color-text-muted);
+  transition: color var(--duration) var(--ease);
+}
+
+.link:hover,
+.on {
+  color: var(--color-deep-emerald);
+}
+
+.time {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-warm);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1;
+}
+
+.on .name {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 8px;
+}
+
+.count {
+  position: absolute;
+  top: 18px;
+  right: -22px;
+  font-size: var(--text-tag);
+  font-weight: 600;
+  color: var(--color-text-warm);
+}
+
+/* Вставка */
+.editorial {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: center;
+  padding-block: var(--space-6);
+}
+
+.editorialMedia {
+  grid-column: 1 / span 7;
+}
+
+.editorialText {
+  grid-column: 9 / span 4;
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.editorialBody {
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-strong);
+}
+
+.editorialLink {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  border-bottom: var(--line) solid currentColor;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 1023px) {
+  .editorialMedia,
+  .editorialText {
+    grid-column: 1 / -1;
+  }
+
+  .editorialText {
+    margin-top: var(--space-5);
+  }
+}
+
+@media (max-width: 767px) {
+  .list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: var(--space-6);
+    margin-inline: calc(var(--grid-margin) * -1);
+    padding: 0 calc(var(--grid-margin) + 24px) var(--space-2) var(--grid-margin);
+    scrollbar-width: none;
+  }
+
+  .list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .link {
+    white-space: nowrap;
+  }
+
+  .name {
+    font-size: 30px;
+  }
+
+  .count {
+    top: 14px;
+    right: -18px;
+  }
+}

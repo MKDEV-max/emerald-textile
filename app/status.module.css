@@ -1,6 +1,6 @@
 .status {
   position: relative;
-  border-bottom: var(--border);
+  border-bottom: var(--border-soft);
   overflow: hidden;
 }
 

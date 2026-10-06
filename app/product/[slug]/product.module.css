@@ -1,5 +1,5 @@
 .top {
-  padding-top: var(--space-6);
+  padding-top: var(--space-5);
   padding-bottom: var(--section);
 }
 
@@ -7,12 +7,279 @@
   margin-top: var(--space-6);
 }
 
-.stack {
-  display: grid;
-  gap: var(--space-3);
-  justify-items: start;
+.textLink {
+  justify-self: start;
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  border-bottom: var(--line) solid currentColor;
+  padding-bottom: 2px;
 }
 
+/* История — типографская пауза */
+.story {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-4) var(--grid-gutter);
+  padding-block: var(--space-9) var(--section);
+}
+
+.story > :nth-child(1),
+.story > :nth-child(2) {
+  grid-column: span 2;
+}
+
+.storyText {
+  grid-column: 3 / span 9;
+  font-size: clamp(30px, 3.2vw, 48px);
+  line-height: 1.08;
+  text-transform: none;
+  letter-spacing: -0.005em;
+}
+
+/* Материал */
+.material {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+
+.materialMedia {
+  position: relative;
+  min-height: 720px;
+  background: var(--color-paper);
+}
+
+.materialText {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-4);
+  padding: var(--space-9) var(--grid-margin) var(--space-9) var(--space-9);
+  background: var(--color-white);
+}
+
+.feel {
+  font-size: var(--text-body-l);
+  line-height: 1.5;
+  color: var(--color-text-strong);
+}
+
+.props {
+  display: grid;
+  width: 100%;
+  margin-block: var(--space-3);
+  border-top: var(--border-soft);
+}
+
+.props > div {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: var(--border-faint);
+  font-size: var(--text-body-s);
+}
+
+.props dt {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-warm);
+  padding-top: 2px;
+}
+
+.props dd {
+  color: var(--color-text-strong);
+}
+
+/* Деталь */
+.detail {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: end;
+  padding-block: var(--section);
+}
+
+.detailText {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: var(--space-4);
+  color: var(--color-text-strong);
+}
+
+.detailMedia {
+  grid-column: 6 / span 7;
+}
+
+/* Уход */
+.care {
+  position: relative;
+  background: var(--color-forest);
+  color: var(--color-cream);
+  overflow: hidden;
+}
+
+.careInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  padding-top: var(--space-9);
+  padding-bottom: 200px;
+}
+
+.careHead {
+  grid-column: 1 / span 4;
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+}
+
+.careNote {
+  font-size: var(--text-body-s);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.careList {
+  grid-column: 6 / span 7;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6) var(--grid-gutter);
+  align-content: start;
+}
+
+.careList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-body-s);
+}
+
+.careList svg {
+  flex: none;
+}
+
+.careWave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 34%;
+}
+
+.careWave img {
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Коллекция */
+.collection {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  padding-block: var(--section);
+  align-items: start;
+}
+
+.collectionHead {
+  grid-column: 1 / span 3;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+}
+
+.collectionLead {
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
+}
+
+.collectionRail {
+  grid-column: 5 / span 8;
+}
+
+@media (min-width: 1024px) {
+  .collectionRail ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Похожие */
 .similar {
-  border-top: var(--border);
+  padding-top: var(--space-8);
+  padding-bottom: var(--section);
+  border-top: var(--border-soft);
+}
+
+.similarHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-7);
+}
+
+@media (max-width: 1023px) {
+  .story > :nth-child(1),
+  .story > :nth-child(2),
+  .storyText {
+    grid-column: 1 / -1;
+  }
+
+  .material {
+    grid-template-columns: 1fr;
+  }
+
+  .materialMedia {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .materialText {
+    padding: var(--space-8) var(--grid-margin);
+  }
+
+  .detailText,
+  .detailMedia,
+  .careHead,
+  .careList,
+  .collectionHead,
+  .collectionRail {
+    grid-column: 1 / -1;
+  }
+
+  .detailText,
+  .careHead,
+  .collectionHead {
+    margin-bottom: var(--space-6);
+  }
+}
+
+@media (max-width: 767px) {
+  .storyText {
+    font-size: 28px;
+  }
+
+  .careList {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .careInner {
+    padding-bottom: 130px;
+  }
+
+  .careWave {
+    max-height: 22%;
+  }
+
+  .similarHead {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
 }

@@ -36,7 +36,7 @@ export function CategoryModules({ categories }: { categories: Category[] }) {
 export function CategoryCard({ category, priority }: { category: Category; priority?: boolean }) {
   return (
     <Link href={`/catalog/${category.slug}`} className={`${s.catCard} card-hover`}>
-      <Media image={category.hero} ratio="3 / 4" frame zoom priority={priority} sizes="(max-width: 767px) 50vw, 25vw" />
+      <Media image={category.hero} ratio="3 / 4" zoom priority={priority} sizes="(max-width: 767px) 50vw, 25vw" />
       <span className={s.catCardText}>
         <span className="t-h4">{category.name}</span>
         <span className={s.moduleMeta}>
@@ -77,7 +77,7 @@ export function EditorialSection({
     <section className={`${s.editorial} ${s[`tone_${tone}`]} ${tone === "forest" ? "on-dark" : ""}`}>
       <div className={`container ${s.editorialGrid} ${reverse ? s.reverse : ""}`}>
         <div className={s.editorialMedia}>
-          <Media image={image} ratio={ratio} frame={tone !== "forest"} sizes="(max-width: 1023px) 100vw, 50vw" />
+          <Media image={image} ratio={ratio} sizes="(max-width: 1023px) 100vw, 50vw" />
         </div>
         <div className={s.editorialText}>
           {eyebrow && <p className="t-label">{eyebrow}</p>}
@@ -133,7 +133,7 @@ export function Palette({ colors, size = "m" }: { colors: ColorKey[]; size?: "m"
 export function CollectionCard({ collection: c }: { collection: Collection }) {
   return (
     <Link href={`/collections/${c.slug}`} className={`${s.colCard} card-hover`}>
-      <Media image={c.image} ratio="4 / 5" frame zoom sizes="(max-width: 767px) 100vw, 33vw" />
+      <Media image={c.image} ratio="4 / 5" zoom sizes="(max-width: 767px) 100vw, 33vw" />
       <span className={s.colCardText}>
         <span className="t-label">{c.season}</span>
         <span className="t-h3">«{c.name}»</span>
@@ -151,7 +151,7 @@ export function CollectionCard({ collection: c }: { collection: Collection }) {
 export function MaterialCard({ material: m }: { material: Material }) {
   return (
     <Link href={`/materials#${m.slug}`} className={`${s.matCard} card-hover`}>
-      <Media image={m.image} ratio="1 / 1" frame zoom sizes="(max-width: 767px) 50vw, 25vw" />
+      <Media image={m.image} ratio="1 / 1" zoom sizes="(max-width: 767px) 50vw, 25vw" />
       <span className={s.matCardText}>
         <span className="t-h4">{m.name}</span>
         <span className={s.matCardFeel}>{m.feel}</span>
@@ -179,7 +179,7 @@ export function ArticleCard({ article: a, large, priority }: { article: Article;
   return (
     <article className={`${s.article} ${large ? s.articleLarge : ""} card-hover`}>
       <Link href={`/journal/${a.slug}`} className={s.articleLink}>
-        <Media image={a.image} ratio={large ? "16 / 10" : "4 / 3"} frame zoom priority={priority} sizes={large ? "(max-width: 1023px) 100vw, 60vw" : "(max-width: 767px) 100vw, 33vw"} />
+        <Media image={a.image} ratio={large ? "16 / 10" : "4 / 3"} zoom priority={priority} sizes={large ? "(max-width: 1023px) 100vw, 60vw" : "(max-width: 767px) 100vw, 33vw"} />
         <span className={s.articleMeta}>
           <span>{a.category}</span>
           <span aria-hidden="true">·</span>

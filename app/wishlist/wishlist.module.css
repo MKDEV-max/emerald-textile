@@ -9,7 +9,7 @@
   gap: var(--space-4);
   padding-bottom: var(--space-4);
   margin-bottom: var(--space-6);
-  border-bottom: var(--border);
+  border-bottom: var(--border-soft);
 }
 
 .grid {

@@ -2,18 +2,55 @@ import Link from "next/link";
 import { COLLECTIONS } from "@/lib/data/collections";
 import { ARTICLES } from "@/lib/data/journal";
 import { getProduct } from "@/lib/data/products";
-import { PHOTOS, textileImage } from "@/lib/data/images";
-import { byCollection, minPrice, newArrivals } from "@/lib/catalog";
-import { countLabel, formatDate, formatPrice } from "@/lib/format";
-import type { Product } from "@/lib/types";
+import { PHOTOS, textileImage, textureImage } from "@/lib/data/images";
+import { byCategory, newArrivals } from "@/lib/catalog";
+import { countLabel, formatDate, PRODUCT_FORMS } from "@/lib/format";
+import type { CategorySlug, ImageAsset, Product } from "@/lib/types";
 import { Button } from "@/components/Button";
-import { Logo } from "@/components/Logo";
 import { Media } from "@/components/Media";
 import { MaterialAtlas, type AtlasItem } from "@/components/MaterialAtlas";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductRail } from "@/components/ProductGrid";
+import { Palette } from "@/components/editorial";
 import { Wave } from "@/components/ui";
 import s from "./home.module.css";
+
+/* Пространства дома — каждое со своим временем суток и настроением */
+const SPACES: { slug: CategorySlug; name: string; time: string; mood: string; image: ImageAsset; ratio: string; position?: string }[] = [
+  {
+    slug: "bathroom",
+    name: "Ванная комната",
+    time: "Утро",
+    mood: "Вода, махра, камень и первый свет",
+    image: textureImage("terry-milk", "Махровое полотенце молочного цвета крупным планом"),
+    ratio: "3 / 4",
+  },
+  {
+    slug: "dining",
+    name: "Столовая",
+    time: "День",
+    mood: "Дерево, лён и неторопливая сервировка",
+    image: PHOTOS.diningVertical,
+    ratio: "2 / 3",
+  },
+  {
+    slug: "living",
+    name: "Гостиная",
+    time: "Вечер",
+    mood: "Плед, диван и мягкий вечерний свет",
+    image: PHOTOS.cropKnit,
+    ratio: "1 / 1",
+  },
+  {
+    slug: "bedroom",
+    name: "Спальня",
+    time: "Ночь",
+    mood: "Хлопок, кружево и тишина",
+    image: PHOTOS.bedroomStory,
+    ratio: "4 / 5",
+    position: "50% 70%",
+  },
+];
 
 const ATLAS: AtlasItem[] = [
   {
@@ -23,22 +60,34 @@ const ATLAS: AtlasItem[] = [
     href: "/materials#satin",
     image: PHOTOS.cropBedLinen,
     detail: textileImage("satin", "white", "swatch"),
+    tone: "#f4f1e8",
   },
   {
     name: "Стёжка",
-    feel: "Объём, который держит форму волны — та же линия, что на нашем знаке.",
+    feel: "Объём, который держит линию волны — ту же, что в фирменном знаке.",
     facts: ["Одеяла и покрывала", "Стёжка «волна»"],
     href: "/materials#satin",
     image: PHOTOS.cropQuilt,
     detail: textileImage("quilt", "milk", "swatch"),
+    tone: "#eef0ea",
   },
   {
     name: "Вязка",
-    feel: "Упругая, тёплая, с рельефом кос, который хочется проследить пальцами.",
+    feel: "Упругая и тёплая, с рельефом кос, который хочется проследить пальцами.",
     facts: ["Хлопок с шерстью", "Пледы и наволочки"],
     href: "/materials#knit",
     image: PHOTOS.cropKnit,
     detail: textileImage("knit", "walnut", "swatch"),
+    tone: "#efe8df",
+  },
+  {
+    name: "Кружево",
+    feel: "Тонкая кайма по краю — деталь, которую замечаешь не сразу.",
+    facts: ["Хлопковое кружево", "Скатерти и одеяла"],
+    href: "/collections/s-kruzhevom",
+    image: PHOTOS.cropLaceTable,
+    detail: PHOTOS.cropLaceBed,
+    tone: "#f3efe6",
   },
   {
     name: "Лён",
@@ -47,22 +96,7 @@ const ATLAS: AtlasItem[] = [
     href: "/materials#linen",
     image: textileImage("linen", "sand", "swatch"),
     detail: textileImage("linen", "sand", "close"),
-  },
-  {
-    name: "Махра",
-    feel: "Пышная петля с весом — тёплое прикосновение после воды.",
-    facts: ["Хлопковая махра", "Полотенца, халаты, коврики"],
-    href: "/materials#terry",
-    image: textileImage("terry", "milk", "swatch"),
-    detail: textileImage("terry", "milk", "close"),
-  },
-  {
-    name: "Вафля",
-    feel: "Лёгкая рельефная ячейка — для бани, кухни и тёплого сезона.",
-    facts: ["Вафельное полотно", "Полотенца и халаты"],
-    href: "/materials#waffle",
-    image: textileImage("waffle", "white", "swatch"),
-    detail: textileImage("waffle", "white", "close"),
+    tone: "#efe9de",
   },
 ];
 
@@ -70,222 +104,234 @@ const pick = (slugs: string[]) => slugs.map(getProduct).filter(Boolean) as Produ
 
 export default function HomePage() {
   const feature = COLLECTIONS[0];
-  const seasonLead = getProduct("odeyalo-s-kruzhevom")!;
-  const season = pick(["skatert-s-kruzhevom", "vyazaniy-pled-s-kosami"]);
-  const others = COLLECTIONS.slice(1);
-  const articles = ARTICLES.slice(0, 3);
+  const curated = pick(["skatert-s-kruzhevom", "vyazaniy-pled-s-kosami", "satinovye-navolochki", "lyogkoe-odeyalo"]);
+  const [lead, ...more] = ARTICLES.slice(0, 3);
 
   return (
     <>
-      {/* 01 — HERO: типографика наслаивается на фотографию */}
-      <section className={s.hero} aria-labelledby="hero-title">
-        <div className={s.heroMedia}>
-          <Media image={PHOTOS.bedroomTall} fill priority sizes="(max-width: 1023px) 100vw, 60vw" position="58% 62%" />
-        </div>
-        <div className={`container-wide ${s.heroGrid}`}>
-          <p className={s.heroIndex}>
-            <span className="t-index">01</span>
-            <span className="t-eyebrow">Новая коллекция · Осень 2026</span>
+      {/* 01 — ВСТУПЛЕНИЕ: воздух, метка, крупная капитель */}
+      <section className={s.intro} aria-labelledby="hero-title">
+        <div className={`container ${s.introGrid}`}>
+          <p className={s.introLabel}>
+            <span className="t-index">Коллекция 01</span>
+            <span className="t-eyebrow">«С кружевом» · Осень 2026</span>
           </p>
-          <h1 id="hero-title" className={s.heroTitle}>
-            <span>Текстиль,</span>
-            <span className={s.heroIndent}>который создаёт</span>
-            <span>ощущение</span>
-            <span className={s.heroIndent2}>дома</span>
+          <h1 id="hero-title" className={s.introTitle}>
+            <span>Текстиль, который</span>
+            <span className={s.introShift}>создаёт ощущение</span>
+            <span className={s.introLast}>дома</span>
           </h1>
-          <div className={s.heroFoot}>
-            <p className={s.heroLead}>
-              Натуральные материалы, выразительная фактура и вещи, к которым хочется возвращаться каждый день.
-            </p>
-            <div className={s.heroCtas}>
-              <Button href={`/collections/${feature.slug}`}>Смотреть коллекцию</Button>
-              <Button href="/catalog" variant="link" arrow={false}>
-                Каталог
-              </Button>
-            </div>
+          <div className={s.introSide}>
+            <p>Хлопок, лён и кружево — для дома, в котором хочется оставаться.</p>
+            <Button href={`/collections/${feature.slug}`}>Смотреть коллекцию</Button>
           </div>
         </div>
+        {/* Волна — переход от типографики к фотографии */}
+        <Wave tone="emerald" className={s.introWave} />
       </section>
 
-      {/* 02 — ТИПОГРАФСКАЯ ПАУЗА */}
-      <section className={`container ${s.pause}`} aria-label="Философия">
-        <p className={s.pauseIndex}>
+      {/* 02 — HERO: большой образ с нестандартным кадром */}
+      <figure className={s.hero}>
+        <div className={s.heroImage}>
+          <Media image={PHOTOS.bedroomTall} fill priority sizes="100vw" position="50% 66%" />
+        </div>
+        <figcaption className={`container ${s.heroCaption}`}>
           <span className="t-index">02</span>
-          <span className="t-eyebrow">Emerald Textile</span>
-        </p>
-        <p className={`display ${s.pauseText}`}>
-          Мягкость приходит из ткани и дневного света, а не из лишних деталей.
-        </p>
-        <Link href="/about" className={s.pauseLink}>
-          О бренде →
-        </Link>
-      </section>
-
-      {/* 03 — FULL-BLEED */}
-      <figure className={s.bleed}>
-        <Media image={PHOTOS.bedroomWide} ratio="21 / 9" sizes="100vw" position="50% 55%" />
-        <figcaption className={`container ${s.bleedCaption}`}>
-          <span className="t-index">03</span>
-          <span>Спальня в тонах слоновой кости — сатин, стёжка и тёплый свет из окна.</span>
-          <Link href="/collections/slonovaya-kost" className={s.bleedLink}>
-            Коллекция «Слоновая кость» →
+          <span>Одеяло с кружевом, полисатин. Тёплый дневной свет, хлопок, дерево.</span>
+          <Link href="/catalog" className={s.textLink}>
+            Весь каталог
           </Link>
         </figcaption>
       </figure>
 
-      {/* 04 — ВЫБОР СЕЗОНА: ступенчатая композиция */}
-      <section className={`container ${s.season}`} aria-labelledby="season-title">
-        <header className={s.seasonHead}>
-          <span className="t-index">04</span>
-          <h2 id="season-title" className="t-h1">
-            Выбор сезона
+      {/* 03 — ПРОСТРАНСТВА: утро, день, вечер, ночь */}
+      <section className={`container ${s.spaces}`} aria-labelledby="spaces-title">
+        <header className={s.sectionHead}>
+          <span className="t-index">03</span>
+          <h2 id="spaces-title" className="t-h2">
+            Четыре пространства, четыре времени дня
           </h2>
         </header>
-        <div className={s.seasonGrid}>
-          <article className={`${s.seasonLead} card-hover`}>
-            <Link href={`/product/${seasonLead.slug}`} className={s.seasonLeadLink}>
-              <Media image={PHOTOS.bedroomLace} ratio="4 / 5" zoom sizes="(max-width: 1023px) 100vw, 45vw" />
-              <span className={s.seasonLeadText}>
-                <span className="t-eyebrow">Полисатин · кружево</span>
-                <span className="t-h3">{seasonLead.name}</span>
-                <span className={s.seasonPrice}>{formatPrice(minPrice(seasonLead))}</span>
-              </span>
-            </Link>
-          </article>
-          {season.map((p, i) => (
-            <div key={p.slug} className={`${s.seasonItem} ${i === 1 ? s.seasonItemLow : ""}`}>
-              <ProductCard product={p} ratio="3 / 4" sizes="(max-width: 1023px) 50vw, 22vw" />
-            </div>
+        <ul className={s.spacesList}>
+          {SPACES.map((sp, i) => (
+            <li key={sp.slug} className={`${s.space} ${s[`space${i}`]}`}>
+              <Link href={`/catalog/${sp.slug}`} className={`${s.spaceLink} card-hover`}>
+                <Media image={sp.image} ratio={sp.ratio} zoom sizes="(max-width: 767px) 100vw, 25vw" position={sp.position} />
+                <span className={s.spaceTime}>{sp.time}</span>
+                <span className={s.spaceName}>{sp.name}</span>
+                <span className={s.spaceMood}>{sp.mood}</span>
+                <span className={s.spaceCount}>{countLabel(byCategory(sp.slug).length, PRODUCT_FORMS)}</span>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
-      {/* 05 — АТЛАС МАТЕРИАЛОВ */}
-      <section className={s.atlasSection} aria-labelledby="atlas-title">
+      {/* 04 — МАНИФЕСТ: короткая пауза */}
+      <section className={s.manifesto} aria-label="Манифест">
+        <p className={`display ${s.manifestoText}`}>Главный герой — ткань</p>
+        <p className={s.manifestoNote}>
+          <span className="t-index">04</span> Ни людей, ни лишних деталей: свет, складки и фактура.
+        </p>
+      </section>
+
+      {/* 05 — ПОДБОРКА */}
+      <section className={`container ${s.curated}`} aria-labelledby="curated-title">
+        <header className={s.sectionHead}>
+          <span className="t-index">05</span>
+          <h2 id="curated-title" className="t-h2">
+            Выбор сезона
+          </h2>
+          <Link href="/catalog" className={s.headLink}>
+            Каталог
+          </Link>
+        </header>
+        <ul className={s.curatedGrid}>
+          {curated.map((p, i) => (
+            <li key={p.slug} className={s[`cur${i}`]}>
+              <ProductCard product={p} ratio={i === 0 ? "4 / 5" : "3 / 4"} sizes="(max-width: 767px) 50vw, 30vw" />
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* 06 — МАТЕРИАЛ: огромная фактура */}
+      <section className={s.material} aria-labelledby="atlas-title">
         <div className="container">
-          <header className={s.atlasHead}>
-            <span className="t-index">05</span>
-            <h2 id="atlas-title" className="t-h1">
-              Почувствуйте ткань
-              <br />
-              до прикосновения
+          <header className={s.sectionHead}>
+            <span className="t-index">06</span>
+            <h2 id="atlas-title" className="t-h2">
+              Почувствуйте ткань до прикосновения
             </h2>
-            <p className={s.atlasLead}>
-              Каждый материал — свой характер. Наведите на название, чтобы увидеть фактуру.
-            </p>
           </header>
           <MaterialAtlas items={ATLAS} />
         </div>
       </section>
 
-      {/* 06 — EDITORIAL STORY */}
-      <section className={`container ${s.story}`} aria-labelledby="story-title">
-        <div className={s.storyMedia}>
-          <Media image={PHOTOS.diningTable} ratio="4 / 5" sizes="(max-width: 1023px) 100vw, 55vw" />
+      {/* 07 — КОЛЛЕКЦИЯ: разворот как в печатном каталоге */}
+      <section className={s.spread} aria-labelledby="col-title">
+        <div className={s.spreadLeft}>
+          <Media image={PHOTOS.bedroomLace} fill sizes="(max-width: 1023px) 100vw, 50vw" position="50% 60%" />
         </div>
-        <div className={s.storyText}>
-          <span className="t-index">06</span>
-          <p className="t-eyebrow">О бренде</p>
-          <h2 id="story-title" className="t-h1">
-            Текстиль, который живёт с вами годами
+        <div className={s.spreadRight}>
+          <span className="t-index">07</span>
+          <p className="t-eyebrow">Спальня · Столовая · {feature.season}</p>
+          <h2 id="col-title" className={`display ${s.spreadTitle}`}>
+            Коллекция
+            <br />«{feature.name}»
           </h2>
-          <p className={s.storyBody}>
-            Мы выбираем дышащие ткани, аккуратную стёжку и тонкое кружево. Каждое изделие упаковано в многоразовый мешок Emerald Textile —
-            его удобно оставить для хранения.
-          </p>
-          <Button href="/about" variant="link" arrow={false}>
-            Читать о бренде
-          </Button>
-          <div className={s.storyDetail}>
-            <Media image={PHOTOS.cropLaceTable} ratio="16 / 9" sizes="(max-width: 1023px) 60vw, 25vw" />
-            <p className="t-caption t-muted">Скатерть с кружевом · хлопок-дак</p>
+          <p className={s.spreadText}>{feature.description}</p>
+          <Palette colors={feature.palette} />
+          <div className={s.spreadDetail}>
+            <Media image={PHOTOS.cropLaceTable} ratio="16 / 9" sizes="(max-width: 1023px) 100vw, 30vw" />
           </div>
+          <Button href={`/collections/${feature.slug}`} variant="secondary">
+            Смотреть коллекцию
+          </Button>
         </div>
       </section>
 
-      {/* 07 — НОВИНКИ */}
+      {/* 08 — МАСТЕРСТВО: шов, кружево, упаковка (как упаковка бренда — Forest и волна) */}
+      <section className={`${s.craft} on-dark`} aria-labelledby="craft-title">
+        <div className={`container ${s.craftGrid}`}>
+          <header className={s.craftHead}>
+            <span className="t-index" style={{ color: "var(--color-cream)", opacity: 0.7 }}>
+              08
+            </span>
+            <h2 id="craft-title" className={`display ${s.craftTitle}`}>
+              Детали, которые замечаешь не сразу
+            </h2>
+          </header>
+          <figure className={s.craft0}>
+            <Media image={PHOTOS.cropQuilt} ratio="4 / 5" sizes="(max-width: 767px) 100vw, 33vw" />
+            <figcaption>
+              <span>Стёжка</span> Линия волны — как на фирменном знаке
+            </figcaption>
+          </figure>
+          <figure className={s.craft1}>
+            <Media image={PHOTOS.cropLaceBed} ratio="1 / 1" sizes="(max-width: 767px) 100vw, 25vw" />
+            <figcaption>
+              <span>Кайма</span> Тонкое хлопковое кружево по краю
+            </figcaption>
+          </figure>
+          <figure className={s.craft2}>
+            <Media image={PHOTOS.packaging} ratio="2 / 3" sizes="(max-width: 767px) 100vw, 25vw" />
+            <figcaption>
+              <span>Упаковка</span> Многоразовый мешок на шнурке
+            </figcaption>
+          </figure>
+        </div>
+        <Wave tone="tonal" className={s.craftWave} />
+      </section>
+
+      {/* 09 — НОВИНКИ */}
       <section className={`container ${s.news}`} aria-labelledby="new-title">
-        <header className={s.rowHead}>
-          <span className="t-index">07</span>
+        <header className={s.sectionHead}>
+          <span className="t-index">09</span>
           <h2 id="new-title" className="t-h2">
             Новинки
           </h2>
-          <Link href="/catalog?sort=new" className={s.rowLink}>
-            Все новинки →
+          <Link href="/catalog?sort=new" className={s.headLink}>
+            Все новинки
           </Link>
         </header>
         <ProductRail products={newArrivals().slice(0, 4)} label="Новинки" />
       </section>
 
-      {/* 08 — BRAND STATEMENT: Forest + тональная волна */}
-      <section className={`${s.statement} on-dark`} aria-label="Манифест бренда">
-        <div className={`container ${s.statementInner}`}>
-          <Logo variant="monogram" tone="cream" height={44} />
-          <p className={`display ${s.statementText}`}>
-            Тёплый натуральный дом
-            <br />и уверенный изумрудный знак
+      {/* 10 — ИСТОРИЯ БРЕНДА */}
+      <section className={`container ${s.story}`} aria-labelledby="story-title">
+        <div className={s.storyText}>
+          <span className="t-index">10</span>
+          <h2 id="story-title" className="t-h2">
+            Тёплый натуральный дом и&nbsp;уверенный изумрудный знак
+          </h2>
+          <p>
+            Emerald Textile держится на контрасте: мягкие бежевые интерьеры с дневным светом — и строгий изумрудный знак с гравюрной
+            волной.
           </p>
-          <p className={s.statementSub}>Натуральный · Тёплый · Мастерский · Уверенный · Текучий</p>
+          <Link href="/about" className={s.textLink}>
+            О бренде
+          </Link>
         </div>
-        <Wave tone="tonal" className={s.statementWave} />
+        <div className={s.storyMedia}>
+          <Media image={PHOTOS.bedroomWide} ratio="3 / 2" sizes="(max-width: 1023px) 100vw, 55vw" />
+        </div>
       </section>
 
-      {/* 09 — КОЛЛЕКЦИЯ */}
-      <section className={s.collection} aria-labelledby="col-title">
-        <div className={s.collectionMedia}>
-          <Media image={PHOTOS.cropLaceBed} fill sizes="(max-width: 1023px) 100vw, 58vw" position="50% 50%" />
-        </div>
-        <div className={s.collectionText}>
-          <span className="t-index">09</span>
-          <p className="t-eyebrow">{feature.season}</p>
-          <h2 id="col-title" className="t-h1">
-            Коллекция «{feature.name}»
+      {/* 11 — ЖУРНАЛ */}
+      <section className={`container ${s.journal}`} aria-labelledby="journal-title">
+        <header className={s.sectionHead}>
+          <span className="t-index">11</span>
+          <h2 id="journal-title" className="t-h2">
+            Журнал
           </h2>
-          <p className={s.collectionBody}>{feature.description}</p>
-          <p className={s.collectionMeta}>
-            {feature.materials.join(" · ")} — {countLabel(byCollection(feature.slug).length, ["предмет", "предмета", "предметов"])}
-          </p>
-          <Button href={`/collections/${feature.slug}`}>Смотреть коллекцию</Button>
-          <ul className={s.collectionList}>
-            {others.map((c) => (
-              <li key={c.slug}>
-                <Link href={`/collections/${c.slug}`} className={s.collectionRow}>
-                  <span className={s.collectionName}>«{c.name}»</span>
-                  <span className={s.collectionSeason}>{c.season}</span>
+          <Link href="/journal" className={s.headLink}>
+            Все статьи
+          </Link>
+        </header>
+        <div className={s.journalGrid}>
+          <Link href={`/journal/${lead.slug}`} className={`${s.journalLead} card-hover`}>
+            <Media image={lead.image} ratio="4 / 3" zoom sizes="(max-width: 1023px) 100vw, 55vw" />
+            <span className={s.journalMeta}>
+              {lead.category} · <time dateTime={lead.date}>{formatDate(lead.date)}</time> · {lead.readTime} мин
+            </span>
+            <span className={`t-h2 ${s.journalTitle}`}>{lead.title}</span>
+            <span className={s.journalText}>{lead.lead}</span>
+          </Link>
+          <ul className={s.journalSide}>
+            {more.map((a) => (
+              <li key={a.slug}>
+                <Link href={`/journal/${a.slug}`} className={`${s.journalItem} card-hover`}>
+                  <Media image={a.image} ratio="3 / 2" zoom sizes="(max-width: 1023px) 100vw, 30vw" />
+                  <span className={s.journalMeta}>
+                    {a.category} · {a.readTime} мин
+                  </span>
+                  <span className={`t-h3 ${s.journalTitle}`}>{a.title}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </div>
-      </section>
-
-      {/* 10 — ЖУРНАЛ */}
-      <section className={`container ${s.journal}`} aria-labelledby="journal-title">
-        <header className={s.rowHead}>
-          <span className="t-index">10</span>
-          <h2 id="journal-title" className="t-h2">
-            Журнал
-          </h2>
-          <Link href="/journal" className={s.rowLink}>
-            Все статьи →
-          </Link>
-        </header>
-        <ul className={s.journalList}>
-          {articles.map((a) => (
-            <li key={a.slug}>
-              <Link href={`/journal/${a.slug}`} className={s.journalRow}>
-                <span className={s.journalMeta}>
-                  {a.category} · <time dateTime={a.date}>{formatDate(a.date)}</time>
-                </span>
-                <span className={s.journalTitle}>{a.title}</span>
-                <span className={s.journalLead}>{a.lead}</span>
-                <span className={s.journalThumb}>
-                  <Media image={a.image} ratio="4 / 3" sizes="200px" />
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
     </>
   );

@@ -44,7 +44,7 @@ export default function MaterialsPage() {
           <section key={m.slug} id={m.slug} className={`${s.material} ${i % 2 ? s.alt : ""}`} aria-labelledby={`m-${m.slug}`}>
             <div className={`container ${s.grid}`}>
               <div className={s.media}>
-                <Media image={m.image} ratio="4 / 5" frame sizes="(max-width: 1023px) 100vw, 42vw" priority={i === 0} />
+                <Media image={m.image} ratio="4 / 5" sizes="(max-width: 1023px) 100vw, 42vw" priority={i === 0} />
               </div>
               <div className={s.body}>
                 <p className={s.num}>{String(i + 1).padStart(2, "0")}</p>

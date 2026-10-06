@@ -22,11 +22,20 @@ export default function JournalPage() {
         lead="Спокойные тексты о материалах, уходе и доме. Без спешки — так, как мы сами выбираем текстиль."
       />
       <div className={`container ${s.page}`}>
-        <div className={s.featured}>
-          <ArticleCard article={featured} large priority />
+        <div className={s.top}>
+          <div className={s.featured}>
+            <ArticleCard article={featured} large priority />
+          </div>
+          <ul className={s.secondary}>
+            {rest.slice(0, 2).map((a) => (
+              <li key={a.slug}>
+                <ArticleCard article={a} />
+              </li>
+            ))}
+          </ul>
         </div>
         <ul className={s.grid}>
-          {rest.map((a) => (
+          {rest.slice(2).map((a) => (
             <li key={a.slug}>
               <ArticleCard article={a} />
             </li>

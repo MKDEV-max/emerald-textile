@@ -32,7 +32,7 @@ export default function CollectionsPage() {
           <section key={c.slug} className={`${s.block} ${i % 2 ? s.alt : ""}`} aria-labelledby={`c-${c.slug}`}>
             <div className={`container ${s.grid}`}>
               <div className={s.media}>
-                <Media image={c.image} ratio="4 / 5" frame sizes="(max-width: 1023px) 100vw, 50vw" priority={i === 0} />
+                <Media image={c.image} ratio="4 / 5" sizes="(max-width: 1023px) 100vw, 50vw" priority={i === 0} />
               </div>
               <div className={s.text}>
                 <span className={s.index}>{String(i + 1).padStart(2, "0")}</span>

@@ -4,7 +4,7 @@
   justify-content: space-between;
   min-height: var(--header-height);
   padding: 0 var(--space-5);
-  border-bottom: var(--border);
+  border-bottom: var(--border-soft);
   background: var(--color-white);
 }
 
@@ -34,6 +34,9 @@
   width: 100%;
   min-height: 64px;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: 32px;
   letter-spacing: var(--tracking-display);
   line-height: 1;
@@ -70,8 +73,11 @@
 
 .subTitle {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: 22px;
-  letter-spacing: -0.03em;
+  letter-spacing: var(--tracking-display-s);
 }
 
 .subList {
@@ -94,7 +100,7 @@
 .service {
   display: grid;
   padding: var(--space-4) var(--space-5);
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .serviceLink {

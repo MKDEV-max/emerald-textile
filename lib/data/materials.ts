@@ -100,7 +100,7 @@ export const MATERIALS: Material[] = [
     ],
     care: ["wash30", "noBleach", "tumbleLow", "ironLow"],
     careText: "Стирайте при 30–40 °C, выворачивая наизнанку. Гладьте с изнанки при низкой температуре.",
-    image: textureImage("satin-white", "Белый сатин с мягким блеском"),
+    image: PHOTOS.cropBedLinen,
   },
   {
     slug: "crinkle",

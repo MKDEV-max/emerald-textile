@@ -20,7 +20,6 @@
   display: block;
   aspect-ratio: 4 / 5;
   background: var(--color-ivory);
-  box-shadow: inset 0 0 0 1px var(--color-emerald);
   overflow: hidden;
 }
 
@@ -44,9 +43,12 @@
 
 .name {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: 20px;
   line-height: 1.15;
-  letter-spacing: -0.03em;
+  letter-spacing: var(--tracking-display-s);
 }
 
 .name:hover {

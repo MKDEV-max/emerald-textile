@@ -125,6 +125,11 @@ export function textileImage(weave: Weave, color: ColorKey, variant: "detail" | 
   };
 }
 
+/**
+ * Изображение материала для крупных показов. Вместо «сырой» процедурной
+ * фактуры используется образец ткани с тканым ярлыком — осознанный предмет
+ * бренда, а не имитация фотографии. name — «ткань-цвет», например "linen-sand".
+ */
 export function textureImage(name: string, alt: string): ImageAsset {
-  return { src: `/images/textures/${name}.jpg`, alt, kind: "macro" };
+  return { src: `/images/products/${name}-swatch.jpg`, alt, kind: "packshot" };
 }

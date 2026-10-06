@@ -5,7 +5,7 @@
   gap: var(--space-4);
   min-height: var(--header-height);
   padding: 0 var(--space-6);
-  border-bottom: var(--border);
+  border-bottom: var(--border-soft);
 }
 
 .count {
@@ -42,7 +42,7 @@
   display: grid;
   gap: var(--space-3);
   padding: var(--space-5) var(--space-6) var(--space-6);
-  border-top: var(--border);
+  border-top: var(--border-soft);
   background: var(--color-white);
 }
 
@@ -54,6 +54,9 @@
 
 .total {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: var(--text-h3);
   letter-spacing: var(--tracking-display);
 }

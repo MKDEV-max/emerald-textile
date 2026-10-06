@@ -1,371 +1,161 @@
-/* ── 01 Hero ───────────────────────────────────────── */
-.hero {
+/* Общие элементы */
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.headLink,
+.textLink {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  border-bottom: var(--line) solid currentColor;
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+
+.headLink {
+  margin-left: auto;
+}
+
+/* ── 01 Вступление ─────────────────────────────────── */
+.intro {
   position: relative;
-  min-height: min(calc(100svh - var(--header-height)), 940px);
-  max-width: var(--page-max);
-  margin-inline: auto;
   overflow: hidden;
 }
 
-.heroMedia {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 58%;
-}
-
-.heroGrid {
-  position: relative;
-  z-index: 1;
+.introGrid {
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: inherit;
-  padding-block: var(--space-7) var(--space-8);
-  pointer-events: none;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-7);
 }
 
-.heroGrid > * {
-  pointer-events: auto;
-}
-
-.heroIndex {
+.introLabel {
+  grid-column: 1 / -1;
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
 }
 
-.heroTitle {
-  align-self: center;
+.introTitle {
+  grid-column: 1 / -1;
   display: grid;
-  margin: var(--space-7) 0;
   font-family: var(--font-display);
   font-stretch: var(--display-stretch);
   font-variation-settings: "wdth" 62.5;
   font-weight: 400;
   text-transform: uppercase;
-  font-size: var(--text-hero);
-  line-height: 0.9;
-  letter-spacing: var(--tracking-display);
+  font-size: clamp(56px, 9.4vw, 136px);
+  line-height: 0.96;
+  letter-spacing: -0.01em;
   color: var(--color-deep-emerald);
+  animation: rise-in 700ms var(--ease-out) both;
 }
 
-.heroTitle span {
+.introTitle span {
   display: block;
-  white-space: nowrap;
 }
 
-.heroIndent {
-  padding-left: 8.333%;
+.introShift {
+  padding-left: 16.666%;
 }
 
-.heroIndent2 {
-  padding-left: 41.666%;
+.introLast {
+  padding-left: 50%;
 }
 
-.heroFoot {
+.introSide {
+  grid-column: 1 / span 4;
+  margin-top: calc(var(--space-9) * -0.9);
   display: grid;
+  justify-items: start;
   gap: var(--space-5);
-  max-width: 400px;
-}
-
-.heroLead {
   font-size: var(--text-body);
   color: var(--color-text-strong);
+  max-width: 340px;
 }
 
-.heroCtas {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-5) var(--space-6);
+/* волна не выше 45% носителя, прижата к нижнему краю */
+.introWave {
+  max-height: 150px;
 }
 
-/* ── 02 Пауза ──────────────────────────────────────── */
-.pause {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--space-6) var(--grid-gutter);
-  padding-block: calc(var(--section) * 1.4);
+.introWave img {
+  object-fit: cover;
+  object-position: top;
 }
 
-.pauseIndex {
-  grid-column: 1 / span 3;
-  display: flex;
-  gap: var(--space-4);
-  padding-top: var(--space-3);
-}
-
-.pauseText {
-  grid-column: 4 / span 8;
-  font-size: clamp(40px, 4.6vw, 68px);
-  line-height: 1;
-  color: var(--color-deep-emerald);
-}
-
-.pauseLink {
-  grid-column: 9 / span 4;
-  font-size: var(--text-tag);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-/* ── 03 Full-bleed ─────────────────────────────────── */
-.bleed {
+/* ── 02 Hero ───────────────────────────────────────── */
+.hero {
   margin: 0;
 }
 
-.bleedCaption {
+.heroImage {
+  position: relative;
+  height: min(88svh, 860px);
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+
+.heroCaption {
   display: grid;
   grid-template-columns: 1fr 6fr 5fr;
   gap: var(--grid-gutter);
+  align-items: baseline;
   padding-block: var(--space-4);
   font-size: var(--text-body-s);
   color: var(--color-text-muted);
 }
 
-.bleedLink {
+.heroCaption .textLink {
   justify-self: end;
-  font-size: var(--text-tag);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
   color: var(--color-deep-emerald);
 }
 
-/* ── 04 Выбор сезона ───────────────────────────────── */
-.season {
-  padding-block: var(--section);
-}
-
-.seasonHead,
-.rowHead {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-5);
-  margin-bottom: var(--space-8);
-}
-
-.rowLink {
-  margin-left: auto;
-  font-size: var(--text-tag);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-.seasonGrid {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gutter);
-  align-items: start;
-}
-
-.seasonLead {
-  grid-column: 1 / span 6;
-}
-
-.seasonLeadLink {
-  display: grid;
-  gap: var(--space-5);
-}
-
-.seasonLeadText {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.seasonPrice {
-  font-size: var(--text-body-s);
-  font-weight: 500;
-}
-
-.seasonItem {
-  grid-column: 8 / span 2;
-  margin-top: var(--space-9);
-}
-
-.seasonItemLow {
-  grid-column: 10 / span 3;
-  margin-top: calc(var(--space-9) * 2.4);
-}
-
-/* ── 05 Атлас ──────────────────────────────────────── */
-.atlasSection {
-  padding-block: var(--section);
-  background: var(--color-white);
-}
-
-.atlasHead {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--space-4) var(--grid-gutter);
-  margin-bottom: var(--space-8);
-}
-
-.atlasHead > :first-child {
-  grid-column: 1 / -1;
-}
-
-.atlasHead h2 {
-  grid-column: 1 / span 7;
-}
-
-.atlasLead {
-  grid-column: 9 / span 4;
-  align-self: end;
-  font-size: var(--text-body-s);
-  color: var(--color-text-muted);
-}
-
-/* ── 06 Story ──────────────────────────────────────── */
-.story {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: var(--grid-gutter);
-  padding-block: var(--section);
-  align-items: start;
-}
-
-.storyMedia {
-  grid-column: 1 / span 7;
-}
-
-.storyText {
-  grid-column: 9 / span 4;
-  display: grid;
-  justify-items: start;
-  gap: var(--space-5);
-  padding-left: var(--space-6);
-  border-left: var(--border-soft);
-  margin-top: var(--space-9);
-}
-
-.storyBody {
-  font-size: var(--text-body-l);
-  line-height: 1.6;
-  color: var(--color-text-strong);
-}
-
-.storyDetail {
-  display: grid;
-  gap: var(--space-2);
-  width: 100%;
-  margin-top: var(--space-7);
-}
-
-/* ── 07 Новинки ────────────────────────────────────── */
-.news {
+/* ── 03 Пространства ──────────────────────────────── */
+.spaces {
+  padding-top: calc(var(--section) * 1.2);
   padding-bottom: var(--section);
 }
 
-/* ── 08 Statement ──────────────────────────────────── */
-.statement {
-  position: relative;
-  background: var(--color-forest);
-  color: var(--color-cream);
-  overflow: hidden;
-}
-
-.statementInner {
-  position: relative;
-  z-index: 1;
+.spacesList {
   display: grid;
-  justify-items: start;
-  gap: var(--space-7);
-  padding-top: var(--space-10);
-  padding-bottom: 300px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
 }
 
-.statementText {
-  font-size: clamp(44px, 7.4vw, 112px);
-  line-height: 0.92;
-  max-width: 11ch;
+.space0 {
+  grid-column: 1 / span 3;
 }
 
-.statementSub {
-  font-size: var(--text-tag);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  opacity: 0.7;
+.space1 {
+  grid-column: 4 / span 3;
+  margin-top: var(--space-10);
 }
 
-.statementWave {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  max-height: 42%;
-}
-
-.statementWave img {
-  object-fit: cover;
-  object-position: top;
-}
-
-/* ── 09 Коллекция ──────────────────────────────────── */
-.collection {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
-  max-width: var(--page-max);
-  margin-inline: auto;
-}
-
-.collectionMedia {
-  position: relative;
-  min-height: 820px;
-}
-
-.collectionText {
-  display: grid;
-  align-content: center;
-  justify-items: start;
-  gap: var(--space-5);
-  padding: var(--space-9) var(--grid-margin) var(--space-9) var(--space-8);
-}
-
-.collectionBody {
-  font-size: var(--text-body);
-  line-height: 1.6;
-  color: var(--color-text-strong);
-}
-
-.collectionMeta {
-  font-size: var(--text-body-s);
-  color: var(--color-text-muted);
-}
-
-.collectionList {
-  width: 100%;
+.space2 {
+  grid-column: 7 / span 3;
   margin-top: var(--space-6);
-  border-top: var(--border-soft);
 }
 
-.collectionRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: var(--border-faint);
-  transition: padding var(--duration) var(--ease);
+.space3 {
+  grid-column: 10 / span 3;
+  margin-top: calc(var(--space-10) * 1.5);
 }
 
-.collectionRow:hover {
-  padding-left: var(--space-3);
+.spaceLink {
+  display: grid;
+  gap: var(--space-2);
 }
 
-.collectionName {
-  font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-variation-settings: "wdth" 62.5;
-  text-transform: uppercase;
-  font-size: 24px;
-  letter-spacing: var(--tracking-display-s);
-}
-
-.collectionSeason {
+.spaceTime {
+  margin-top: var(--space-3);
   font-size: var(--text-tag);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
@@ -373,26 +163,270 @@
   color: var(--color-text-warm);
 }
 
-/* ── 10 Журнал ─────────────────────────────────────── */
-.journal {
+.spaceName {
+  font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
+  font-size: var(--text-h3);
+  line-height: 1;
+}
+
+.spaceMood {
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
+}
+
+.spaceCount {
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+
+/* ── 04 Манифест ───────────────────────────────────── */
+.manifesto {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  padding: var(--space-9) var(--grid-margin) var(--section);
+  text-align: center;
+}
+
+.manifestoText {
+  font-size: clamp(48px, 8.6vw, 128px);
+  line-height: 0.9;
+}
+
+.manifestoNote {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  font-size: var(--text-body-s);
+  color: var(--color-text-muted);
+}
+
+/* ── 05 Подборка ───────────────────────────────────── */
+.curated {
+  padding-bottom: var(--section);
+}
+
+.curatedGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-8) var(--grid-gutter);
+  align-items: start;
+}
+
+.cur0 {
+  grid-column: 1 / span 5;
+}
+
+.cur1 {
+  grid-column: 7 / span 3;
+  margin-top: var(--space-9);
+}
+
+.cur2 {
+  grid-column: 10 / span 3;
+}
+
+.cur3 {
+  grid-column: 7 / span 3;
+  grid-row: 2;
+  margin-top: calc(var(--space-9) * -1);
+}
+
+/* ── 06 Материал ───────────────────────────────────── */
+.material {
+  padding-block: var(--section);
+  background: var(--color-white);
+}
+
+/* ── 07 Разворот коллекции ────────────────────────── */
+.spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  margin-top: var(--section);
+}
+
+.spreadLeft {
+  position: relative;
+  min-height: 860px;
+}
+
+.spreadRight {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-5);
+  padding: var(--space-9) var(--grid-margin) var(--space-9) var(--space-9);
+}
+
+.spreadTitle {
+  font-size: clamp(48px, 5.6vw, 84px);
+  line-height: 0.92;
+}
+
+.spreadText {
+  max-width: 46ch;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-strong);
+}
+
+.spreadDetail {
+  width: 72%;
+  margin-block: var(--space-4);
+}
+
+/* ── 08 Мастерство ─────────────────────────────────── */
+.craft {
+  position: relative;
+  margin-top: var(--section);
+  background: var(--color-forest);
+  color: var(--color-cream);
+  overflow: hidden;
+}
+
+.craftGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
+  padding-top: var(--section);
+  padding-bottom: 260px;
+}
+
+.craftHead {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.craftTitle {
+  font-size: clamp(42px, 5.6vw, 84px);
+  line-height: 0.92;
+  max-width: 14ch;
+}
+
+.craft0,
+.craft1,
+.craft2 {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.craft0 {
+  grid-column: 1 / span 5;
+}
+
+.craft1 {
+  grid-column: 7 / span 3;
+  margin-top: var(--space-9);
+}
+
+.craft2 {
+  grid-column: 10 / span 3;
+  margin-top: var(--space-6);
+}
+
+.craft0 figcaption,
+.craft1 figcaption,
+.craft2 figcaption {
+  display: grid;
+  gap: 2px;
+  font-size: var(--text-body-s);
+  opacity: 0.85;
+}
+
+.craft0 figcaption span,
+.craft1 figcaption span,
+.craft2 figcaption span {
+  font-size: var(--text-tag);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.craftWave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 34%;
+}
+
+.craftWave img {
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ── 09 Новинки ────────────────────────────────────── */
+.news {
   padding-block: var(--section);
 }
 
-.journalList {
+/* ── 10 История ────────────────────────────────────── */
+.story {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: end;
+  padding-bottom: var(--section);
+}
+
+.storyText {
+  grid-column: 1 / span 6;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+  font-size: var(--text-body-l);
+  line-height: 1.6;
+  color: var(--color-text-strong);
+}
+
+.storyMedia {
+  grid-column: 8 / span 5;
+}
+
+/* ── 11 Журнал ─────────────────────────────────────── */
+.journal {
+  padding-top: var(--section);
+  padding-bottom: var(--section);
   border-top: var(--border-soft);
 }
 
-.journalRow {
+.journalGrid {
   display: grid;
-  grid-template-columns: 3fr 5fr 3fr 1.5fr;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--grid-gutter);
   align-items: start;
-  padding-block: var(--space-6);
-  border-bottom: var(--border-soft);
+}
+
+.journalLead {
+  grid-column: 1 / span 7;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.journalSide {
+  grid-column: 9 / span 4;
+  display: grid;
+  gap: var(--space-8);
+}
+
+.journalItem {
+  display: grid;
+  gap: var(--space-3);
 }
 
 .journalMeta {
-  padding-top: 6px;
+  margin-top: var(--space-2);
   font-size: var(--text-tag);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
@@ -401,194 +435,242 @@
 }
 
 .journalTitle {
-  font-family: var(--font-display);
-  font-stretch: var(--display-stretch);
-  font-variation-settings: "wdth" 62.5;
-  text-transform: uppercase;
-  font-size: var(--text-h3);
-  line-height: 1;
   transition: color var(--duration) var(--ease);
 }
 
-.journalRow:hover .journalTitle {
+.journalLead:hover .journalTitle,
+.journalItem:hover .journalTitle {
   color: var(--color-emerald);
 }
 
-.journalLead {
-  font-size: var(--text-body-s);
+.journalText {
+  max-width: 52ch;
+  font-size: var(--text-body);
   color: var(--color-text-muted);
 }
 
 /* ── Планшет ───────────────────────────────────────── */
 @media (max-width: 1023px) {
-  .hero {
-    min-height: 0;
+  .introSide {
+    grid-column: 1 / span 5;
+    margin-top: var(--space-7);
   }
 
-  .heroMedia {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
+  .introLast {
+    padding-left: 40%;
   }
 
-  .heroGrid {
-    padding-block: var(--space-7) var(--space-8);
+  .heroImage {
+    height: 70svh;
   }
 
-  .heroTitle {
-    margin: var(--space-5) 0 var(--space-7);
-    font-size: clamp(54px, 11vw, 110px);
-  }
-
-  .pauseIndex,
-  .pauseText,
-  .pauseLink {
-    grid-column: 1 / -1;
-  }
-
-  .bleedCaption {
+  .heroCaption {
     grid-template-columns: auto 1fr;
   }
 
-  .bleedLink {
-    grid-column: 2;
-    justify-self: start;
-  }
-
-  .seasonLead {
-    grid-column: 1 / -1;
-  }
-
-  .seasonItem,
-  .seasonItemLow {
-    grid-column: span 4;
-    margin-top: var(--space-7);
-  }
-
-  .atlasHead h2,
-  .atlasLead {
-    grid-column: 1 / -1;
-  }
-
-  .storyMedia,
-  .storyText {
-    grid-column: 1 / -1;
-  }
-
-  .storyText {
-    margin-top: var(--space-7);
-  }
-
-  .collection {
-    grid-template-columns: 1fr;
-  }
-
-  .collectionMedia {
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-
-  .collectionText {
-    padding: var(--space-8) var(--grid-margin);
-  }
-
-  .journalRow {
-    grid-template-columns: 1fr 3fr;
-  }
-
-  .journalLead {
-    grid-column: 2;
-  }
-
-  .journalThumb {
+  .heroCaption .textLink {
     display: none;
   }
-}
 
-/* ── Мобильный ─────────────────────────────────────── */
-@media (max-width: 767px) {
-  .heroMedia {
+  .space0,
+  .space2 {
+    grid-column: span 4;
+    margin-top: 0;
+  }
+
+  .space1,
+  .space3 {
+    grid-column: span 4;
+    margin-top: var(--space-9);
+  }
+
+  .cur0 {
+    grid-column: 1 / -1;
+  }
+
+  .cur1,
+  .cur2,
+  .cur3 {
+    grid-column: span 4;
+    grid-row: auto;
+    margin-top: 0;
+  }
+
+  .cur3 {
+    display: none;
+  }
+
+  .spread {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .spreadLeft {
+    min-height: 0;
     aspect-ratio: 4 / 5;
   }
 
-  .heroTitle {
-    font-size: clamp(46px, 14vw, 72px);
+  .spreadRight {
+    padding: var(--space-8) var(--grid-margin);
   }
 
-  .heroIndent,
-  .heroIndent2 {
-    padding-left: 0;
+  .craft0 {
+    grid-column: 1 / -1;
   }
 
-  .heroTitle span {
-    white-space: normal;
+  .craft1,
+  .craft2 {
+    grid-column: span 4;
+    margin-top: var(--space-6);
   }
 
-  .heroCtas > a:first-child {
-    width: 100%;
+  .storyText,
+  .storyMedia {
+    grid-column: 1 / -1;
   }
 
-  .pause {
-    padding-block: var(--space-9);
+  .storyMedia {
+    order: -1;
+    margin-bottom: var(--space-7);
   }
 
-  .bleed :global(div) {
-    aspect-ratio: 4 / 3 !important;
+  .journalLead,
+  .journalSide {
+    grid-column: 1 / -1;
   }
 
-  .bleedCaption {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
+  .journalSide {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--grid-gutter);
+    margin-top: var(--space-7);
   }
+}
 
-  .bleedLink {
-    grid-column: 1;
-  }
-
-  .seasonHead,
-  .rowHead {
+/* ── Мобильный: своя композиция ───────────────────── */
+@media (max-width: 767px) {
+  .sectionHead {
     flex-wrap: wrap;
     gap: var(--space-2) var(--space-4);
     margin-bottom: var(--space-6);
   }
 
-  .seasonItem,
-  .seasonItemLow {
-    grid-column: span 2;
+  .headLink {
+    margin-left: 0;
   }
 
-  .seasonItemLow {
-    margin-top: var(--space-9);
+  .introGrid {
+    padding-top: var(--space-7);
+    padding-bottom: var(--space-6);
   }
 
-  .storyText {
-    padding-left: var(--space-4);
+  .introLabel {
+    flex-direction: column;
+    gap: var(--space-1);
+    margin-bottom: var(--space-6);
   }
 
-  .statementInner {
-    padding-top: var(--space-9);
-    padding-bottom: 160px;
+  .introTitle {
+    font-size: clamp(46px, 15vw, 76px);
+    line-height: 0.9;
   }
 
-  .statementWave {
-    max-height: 30%;
+  .introShift,
+  .introLast {
+    padding-left: 0;
   }
 
-  .collectionMedia {
+  .introSide {
+    grid-column: 1 / -1;
+    margin-top: var(--space-6);
+    max-width: none;
+  }
+
+  .introSide > a {
+    width: 100%;
+  }
+
+  .introWave {
+    max-height: 72px;
+  }
+
+  .heroImage {
+    height: auto;
     aspect-ratio: 4 / 5;
   }
 
-  .journalRow {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
+  .spacesList {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7) var(--grid-gutter);
   }
 
-  .journalLead {
-    grid-column: 1;
+  .space0,
+  .space1,
+  .space2,
+  .space3 {
+    grid-column: span 1;
+    margin-top: 0;
   }
 
-  .rowLink {
-    margin-left: 0;
+  .space1,
+  .space3 {
+    margin-top: var(--space-8);
+  }
+
+  .spaceName {
+    font-size: 22px;
+  }
+
+  .spaceMood,
+  .spaceCount {
+    font-size: var(--text-caption);
+  }
+
+  .manifesto {
+    padding-block: var(--space-8) var(--space-9);
+  }
+
+  .manifestoText {
+    font-size: clamp(44px, 14vw, 64px);
+  }
+
+  .curatedGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-7) var(--grid-gutter);
+  }
+
+  .cur0 {
+    grid-column: 1 / -1;
+  }
+
+  .cur1,
+  .cur2 {
+    grid-column: span 1;
+  }
+
+  .spreadDetail {
     width: 100%;
+  }
+
+  .spreadRight > a:last-child {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .craftGrid {
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 150px;
+  }
+
+  .craft1,
+  .craft2 {
+    grid-column: span 1;
+  }
+
+  .craftWave {
+    max-height: 22%;
+  }
+
+  .journalSide {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
   }
 }

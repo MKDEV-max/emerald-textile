@@ -146,7 +146,7 @@
 .optionMark {
   width: 18px;
   height: 18px;
-  border: var(--border);
+  border: var(--border-soft);
   display: grid;
   place-items: center;
 }
@@ -275,6 +275,9 @@
 
 .miniName {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: 17px;
   line-height: 1.2;
 }
@@ -310,7 +313,7 @@
   align-items: baseline;
   margin-top: var(--space-2);
   padding-top: var(--space-4);
-  border-top: var(--border);
+  border-top: var(--border-soft);
 }
 
 .grand dt {
@@ -323,6 +326,9 @@
 
 .grand dd {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
+  font-variation-settings: "wdth" 62.5;
+  text-transform: uppercase;
   font-size: var(--text-h3);
   letter-spacing: -0.02em;
   color: var(--color-emerald);
@@ -336,7 +342,7 @@
 /* Успех */
 .success {
   position: relative;
-  border-bottom: var(--border);
+  border-bottom: var(--border-soft);
   overflow: hidden;
 }
 
