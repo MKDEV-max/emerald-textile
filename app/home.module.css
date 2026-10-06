@@ -1,8 +1,10 @@
 /* Общие элементы */
 .sectionHead {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-5);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  row-gap: var(--space-4);
+  column-gap: var(--space-5);
   margin-bottom: var(--space-8);
 }
 
@@ -17,8 +19,17 @@
   white-space: nowrap;
 }
 
+.sectionHead > :first-child {
+  grid-column: 1 / -1;
+}
+
+.sectionHead h2 {
+  max-width: 24ch;
+}
+
 .headLink {
-  margin-left: auto;
+  justify-self: end;
+  margin-bottom: 0.5em;
 }
 
 /* ── 01 Вступление ─────────────────────────────────── */
@@ -43,15 +54,15 @@
 }
 
 .introTitle {
-  grid-column: 1 / -1;
+  grid-column: 1 / span 8;
   display: grid;
   font-family: var(--font-display);
   font-stretch: var(--display-stretch);
   font-variation-settings: "wdth" 62.5;
   font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(56px, 9.4vw, 136px);
-  line-height: 1.04;
+  font-size: clamp(52px, 6.9vw, 100px);
+  line-height: 1.02;
   letter-spacing: -0.01em;
   color: var(--color-deep-emerald);
   animation: rise-in 700ms var(--ease-out) both;
@@ -59,25 +70,26 @@
 
 .introTitle span {
   display: block;
+  white-space: nowrap;
 }
 
 .introShift {
-  padding-left: 16.666%;
+  padding-left: 0;
 }
 
 .introLast {
-  padding-left: 50%;
+  padding-left: 0;
 }
 
 .introSide {
-  grid-column: 1 / span 4;
-  margin-top: calc(var(--space-9) * -0.9);
+  grid-column: 10 / span 3;
+  align-self: end;
   display: grid;
   justify-items: start;
   gap: var(--space-5);
+  margin-top: 0;
   font-size: var(--text-body);
   color: var(--color-text-strong);
-  max-width: 340px;
 }
 
 /* волна не выше 45% носителя, прижата к нижнему краю */
@@ -131,22 +143,19 @@
 }
 
 .space0 {
-  grid-column: 1 / span 3;
+  grid-column: span 3;
 }
 
 .space1 {
-  grid-column: 4 / span 3;
-  margin-top: var(--space-10);
+  grid-column: span 3;
 }
 
 .space2 {
-  grid-column: 7 / span 3;
-  margin-top: var(--space-6);
+  grid-column: span 3;
 }
 
 .space3 {
-  grid-column: 10 / span 3;
-  margin-top: calc(var(--space-10) * 1.5);
+  grid-column: span 3;
 }
 
 .spaceLink {
@@ -198,6 +207,7 @@
 
 .manifestoNote {
   display: flex;
+  justify-content: center;
   gap: var(--space-3);
   align-items: baseline;
   font-size: var(--text-body-s);
@@ -213,26 +223,23 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--space-8) var(--grid-gutter);
-  align-items: start;
+  align-items: stretch;
 }
 
 .cur0 {
-  grid-column: 1 / span 5;
+  grid-column: span 3;
 }
 
 .cur1 {
-  grid-column: 7 / span 3;
-  margin-top: var(--space-9);
+  grid-column: span 3;
 }
 
 .cur2 {
-  grid-column: 10 / span 3;
+  grid-column: span 3;
 }
 
 .cur3 {
-  grid-column: 7 / span 3;
-  grid-row: 2;
-  margin-top: calc(var(--space-9) * -1);
+  grid-column: span 3;
 }
 
 /* ── 06 Материал ───────────────────────────────────── */
@@ -316,18 +323,15 @@
 .craft0,
 .craft1,
 .craft2 {
-  margin: 0;
-  display: grid;
-  gap: var(--space-3);
+  grid-column: 10 / span 3;
 }
 
 .craft0 {
-  grid-column: 1 / span 5;
+  grid-column: 1 / span 6;
 }
 
 .craft1 {
   grid-column: 7 / span 3;
-  margin-top: var(--space-9);
 }
 
 .craft2 {
@@ -473,31 +477,21 @@
   }
 
   .space0,
-  .space2 {
-    grid-column: span 4;
-    margin-top: 0;
-  }
-
   .space1,
+  .space2,
   .space3 {
     grid-column: span 4;
-    margin-top: var(--space-9);
   }
 
-  .cur0 {
-    grid-column: 1 / -1;
+  .spacesList {
+    row-gap: var(--space-8);
   }
 
+  .cur0,
   .cur1,
   .cur2,
   .cur3 {
     grid-column: span 4;
-    grid-row: auto;
-    margin-top: 0;
-  }
-
-  .cur3 {
-    display: none;
   }
 
   .spread {
@@ -569,8 +563,13 @@
   }
 
   .introTitle {
-    font-size: clamp(46px, 15vw, 76px);
-    line-height: 0.9;
+    grid-column: 1 / -1;
+    font-size: clamp(44px, 14vw, 72px);
+    line-height: 0.98;
+  }
+
+  .introTitle span {
+    white-space: normal;
   }
 
   .introShift,
@@ -610,10 +609,7 @@
     margin-top: 0;
   }
 
-  .space1,
-  .space3 {
-    margin-top: var(--space-8);
-  }
+
 
   .spaceName {
     font-size: 22px;
@@ -637,12 +633,10 @@
     gap: var(--space-7) var(--grid-gutter);
   }
 
-  .cur0 {
-    grid-column: 1 / -1;
-  }
-
+  .cur0,
   .cur1,
-  .cur2 {
+  .cur2,
+  .cur3 {
     grid-column: span 1;
   }
 

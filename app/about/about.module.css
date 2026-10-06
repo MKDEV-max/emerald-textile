@@ -102,9 +102,9 @@
 
 .tactileImages {
   display: grid;
-  grid-template-columns: 5fr 3fr 4fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: var(--grid-gutter);
-  align-items: end;
+  align-items: start;
   margin-top: var(--space-9);
 }
 
@@ -260,8 +260,8 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .tactileImages > :last-child {
-    display: none;
+  .tactileImages > :first-child {
+    grid-column: 1 / -1;
   }
 
   .principlesList {

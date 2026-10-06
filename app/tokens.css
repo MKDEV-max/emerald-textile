@@ -130,10 +130,12 @@
 
   /* ── 06 · Grid & Layout ────────────────────────────── */
   --grid-columns: 12;
-  --grid-margin: 80px;
+  /* Единая система горизонтальных направляющих: одно поле на все ширины */
+  --grid-margin: clamp(20px, 4vw, 64px);
   --grid-gutter: 24px;
-  --content-max: 1280px;
   --page-max: 1440px;
+  --content-max: calc(var(--page-max) - var(--grid-margin) * 2);
+  --reading-max: 68ch;
 
   /* Breakpoints (для справки; в media queries используются значения напрямую) */
   --bp-mobile: 390px;
@@ -158,14 +160,12 @@
 
 @media (max-width: 1279px) {
   :root {
-    --grid-margin: 48px;
   }
 }
 
 @media (max-width: 1023px) {
   :root {
     --grid-columns: 8;
-    --grid-margin: 40px;
     --section: var(--space-9);
   }
 }
@@ -173,7 +173,6 @@
 @media (max-width: 767px) {
   :root {
     --grid-columns: 4;
-    --grid-margin: 20px;
     --grid-gutter: 16px;
     --section: var(--space-8);      /* 64 mobile */
     --header-height: var(--header-height-mobile);
@@ -182,6 +181,5 @@
 
 @media (max-width: 359px) {
   :root {
-    --grid-margin: 16px;
   }
 }

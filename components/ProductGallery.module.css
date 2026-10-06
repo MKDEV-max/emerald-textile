@@ -20,6 +20,12 @@
   grid-column: 1 / -1;
 }
 
+/* непарный последний кадр — на всю ширину, чтобы ряд не «проваливался» */
+.item:nth-child(even):last-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+
 .open {
   position: absolute;
   inset: 0;

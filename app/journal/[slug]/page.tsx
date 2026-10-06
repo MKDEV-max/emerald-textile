@@ -60,7 +60,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <h1 className="t-h1">{a.title}</h1>
           <p className={`t-body-l ${s.articleLead}`}>{a.lead}</p>
         </header>
-        <Media image={a.image} ratio="21 / 9" priority sizes="100vw" />
+        <Media image={a.image} ratio="16 / 9" priority sizes="100vw" position="50% 62%" />
 
         <div className={s.articleBody}>
           <aside className={s.articleAside} aria-label="Об этой статье">

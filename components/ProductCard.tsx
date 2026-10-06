@@ -71,7 +71,10 @@ export function ProductCard({
       </div>
 
       <div className={s.body}>
-        {status && <p className={`${s.status} ${out ? s.statusOut : ""}`}>{status}</p>}
+        {/* строка статуса резервируется всегда — названия в ряду стоят на одной линии */}
+        <p className={`${s.status} ${out ? s.statusOut : ""}`} aria-hidden={!status}>
+          {status ?? " "}
+        </p>
         <h3 className={s.title}>
           <Link href={href} className={s.titleLink}>
             {p.name}

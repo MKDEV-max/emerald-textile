@@ -76,9 +76,9 @@ export default function AboutPage() {
           </p>
         </div>
         <div className={`container ${s.tactileImages}`}>
-          <Media image={PHOTOS.cropQuilt} ratio="1 / 1" sizes="(max-width: 767px) 50vw, 30vw" />
-          <Media image={PHOTOS.cropKnit} ratio="3 / 4" sizes="(max-width: 767px) 50vw, 22vw" />
-          <Media image={textileImage("linen", "sand", "close")} ratio="4 / 5" sizes="(max-width: 767px) 50vw, 26vw" />
+          <Media image={PHOTOS.cropQuilt} ratio="4 / 3" sizes="(max-width: 767px) 100vw, 50vw" />
+          <Media image={PHOTOS.cropKnit} ratio="2 / 3" sizes="(max-width: 767px) 50vw, 25vw" />
+          <Media image={textileImage("linen", "sand", "close")} ratio="2 / 3" sizes="(max-width: 767px) 50vw, 25vw" />
         </div>
       </section>
 

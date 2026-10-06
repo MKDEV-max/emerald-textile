@@ -156,7 +156,7 @@ export default function HomePage() {
           {SPACES.map((sp, i) => (
             <li key={sp.slug} className={`${s.space} ${s[`space${i}`]}`}>
               <Link href={`/catalog/${sp.slug}`} className={`${s.spaceLink} card-hover`}>
-                <Media image={sp.image} ratio={sp.ratio} zoom sizes="(max-width: 767px) 100vw, 25vw" position={sp.position} />
+                <Media image={sp.image} ratio="3 / 4" zoom sizes="(max-width: 767px) 100vw, 25vw" position={sp.position} />
                 <span className={s.spaceTime}>{sp.time}</span>
                 <span className={s.spaceName}>{sp.name}</span>
                 <span className={s.spaceMood}>{sp.mood}</span>
@@ -170,9 +170,7 @@ export default function HomePage() {
       {/* 04 — МАНИФЕСТ: короткая пауза */}
       <section className={s.manifesto} aria-label="Манифест">
         <p className={`display ${s.manifestoText}`}>Главный герой — ткань</p>
-        <p className={s.manifestoNote}>
-          <span className="t-index">04</span> Ни людей, ни лишних деталей: свет, складки и фактура.
-        </p>
+        <p className={s.manifestoNote}>Ни людей, ни лишних деталей: свет, складки и фактура.</p>
       </section>
 
       {/* 05 — ПОДБОРКА */}
@@ -189,7 +187,7 @@ export default function HomePage() {
         <ul className={s.curatedGrid}>
           {curated.map((p, i) => (
             <li key={p.slug} className={s[`cur${i}`]}>
-              <ProductCard product={p} ratio={i === 0 ? "4 / 5" : "3 / 4"} sizes="(max-width: 767px) 50vw, 30vw" />
+              <ProductCard product={p} ratio="3 / 4" sizes="(max-width: 767px) 50vw, 25vw" />
             </li>
           ))}
         </ul>
@@ -243,13 +241,13 @@ export default function HomePage() {
             </h2>
           </header>
           <figure className={s.craft0}>
-            <Media image={PHOTOS.cropQuilt} ratio="4 / 5" sizes="(max-width: 767px) 100vw, 33vw" />
+            <Media image={PHOTOS.cropQuilt} ratio="4 / 3" sizes="(max-width: 767px) 100vw, 50vw" />
             <figcaption>
               <span>Стёжка</span> Линия волны — как на фирменном знаке
             </figcaption>
           </figure>
           <figure className={s.craft1}>
-            <Media image={PHOTOS.cropLaceBed} ratio="1 / 1" sizes="(max-width: 767px) 100vw, 25vw" />
+            <Media image={PHOTOS.cropLaceBed} ratio="2 / 3" sizes="(max-width: 767px) 100vw, 25vw" />
             <figcaption>
               <span>Кайма</span> Тонкое хлопковое кружево по краю
             </figcaption>
